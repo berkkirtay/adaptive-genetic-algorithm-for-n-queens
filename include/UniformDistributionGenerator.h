@@ -8,7 +8,7 @@ private:
     std::mt19937 eng{std::random_device{}()};
 
 public:
-    int max;
+    int max = 0;
     UniformDistributionGenerator();
-    int generate(unsigned int max);
+    int generate(int max);
 };

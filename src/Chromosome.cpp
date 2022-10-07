@@ -26,6 +26,7 @@ void Chromosome::generateRandomly()
 			sampledGenes.erase(sampledGenes.begin() + random);
 		}
 	}
+	calculateFitness();
 }
 
 void Chromosome::copy(Chromosome chromosome)
@@ -46,16 +47,15 @@ void Chromosome::copyGenes(std::vector<int> genes)
 
 void Chromosome::calculateFitness()
 {
-	TableViewConverter tvc;
-	int result = tvc.convertAndPrint(genes);
-	if (result >= genes.size() - 1)
+	bool isValid = TableViewConverter::instance()->validateSolution(genes);
+	if (isValid)
 	{
-		fitnessScore = INT_MAX;
+		fitnessScore = genes.size();
 	}
 	else
 	{
 		// Calculate the fitness score of the unseccessful chromosomes.
-		fitnessScore = result;
+		fitnessScore = TableViewConverter::instance()->lastIndex;
 	}
 }
 
@@ -63,6 +63,7 @@ bool Chromosome::compare(const Chromosome *a, const Chromosome *b)
 {
 	return a->fitnessScore > b->fitnessScore;
 }
+
 /*
 bool Chromosome:: operator > (const Chromosome chromosome) const
 {

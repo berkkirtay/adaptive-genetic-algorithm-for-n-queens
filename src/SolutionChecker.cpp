@@ -1,5 +1,12 @@
 #include "SolutionChecker.h"
 
+int SolutionChecker::checkAndReturnLastIndex(
+    std::vector<std::string> solution)
+{
+    checkSolution(solution);
+    return lastIndex;
+}
+
 bool SolutionChecker::checkSolution(std::vector<std::string> solution)
 {
     lastIndex = 0;
@@ -27,13 +34,8 @@ bool SolutionChecker::checkSolution(std::vector<std::string> solution)
     return true;
 }
 
-int SolutionChecker::checkAndReturnLastIndex(std::vector<std::string> solution)
-{
-    checkSolution(solution);
-    return lastIndex;
-}
-
-bool SolutionChecker::isAValidPlacement(int i, int j, int n, std::vector<std::string> curr)
+bool SolutionChecker::isAValidPlacement(int i, int j, int n,
+                                        std::vector<std::string> curr)
 {
     int x = 0;
     int y = 0;

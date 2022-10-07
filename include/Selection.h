@@ -5,10 +5,21 @@
 class Selection
 {
 private:
-	Chromosome *currentBestSolution;
+	Chromosome *fittestChromosome;
 	UniformDistributionGenerator uniformDistGenerator;
 
 public:
+	~Selection();
+
+	std::vector<Chromosome *> igniteParentSelection(
+		std::vector<Chromosome *> population,
+		double populationVariance);
+
+	std::vector<Chromosome *> igniteSurvivalSelection(
+		std::vector<Chromosome *> parents,
+		std::vector<Chromosome *> children,
+		double populationVariance);
+
 	std::vector<Chromosome *> randomParentSelection(
 		std::vector<Chromosome *> population);
 
@@ -31,9 +42,9 @@ public:
 		Chromosome *firstChromosome,
 		Chromosome *secondChromosome);
 
-	void selectBest(std::vector<Chromosome *> population);
+	void selectFittest(std::vector<Chromosome *> population);
 
-	Chromosome *getCurrentBestsolution();
+	Chromosome *getFittestChromosome();
 
-	void setCurrentBestsolution(Chromosome *chromosome);
+	void setFittestChromosome(Chromosome *chromosome);
 };

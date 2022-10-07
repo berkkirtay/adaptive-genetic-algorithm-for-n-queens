@@ -1,8 +1,46 @@
 #include "Selection.h"
 
+Selection::~Selection()
+{
+	delete fittestChromosome;
+}
+
+std::vector<Chromosome *> Selection::igniteParentSelection(
+	std::vector<Chromosome *> population, double populationVariance)
+{
+	std::vector<Chromosome *> parents;
+
+	if (populationVariance < 0.2)
+	{
+		parents = randomParentSelection(population);
+	}
+	else
+	{
+		parents = tournamentParentSelection(population);
+	}
+	return parents;
+}
+
+std::vector<Chromosome *> Selection::igniteSurvivalSelection(
+	std::vector<Chromosome *> parents, std::vector<Chromosome *> children, double populationVariance)
+{
+	std::vector<Chromosome *> survivors;
+	if (populationVariance < 0.5)
+	{
+		// Exploration
+		survivors = randomSurvivorSelection(parents, children);
+	}
+	else
+	{
+		// Exploitation
+		survivors = crowdingSurvivalSelection(parents, children);
+	}
+	return survivors;
+}
+
 std::vector<Chromosome *> Selection::randomParentSelection(std::vector<Chromosome *> population)
 {
-	int size = population.size() / 3;
+	int size = population.size() / 4;
 	if (size % 2 == 1)
 	{
 		size++;
@@ -21,7 +59,7 @@ std::vector<Chromosome *> Selection::randomParentSelection(std::vector<Chromosom
 std::vector<Chromosome *> Selection::tournamentParentSelection(
 	std::vector<Chromosome *> population)
 {
-	int size = population.size() / 3;
+	int size = population.size() / 4;
 	if (size % 2 == 1)
 	{
 		size++;
@@ -100,19 +138,16 @@ std::vector<Chromosome *> Selection::randomSurvivorSelection(
 	return survivors;
 }
 
-void Selection::selectBest(std::vector<Chromosome *> population)
+void Selection::selectFittest(std::vector<Chromosome *> population)
 {
-	std::vector<int> fitnessList;
 	for (auto chromosome : population)
 	{
-		chromosome->calculateFitness();
-		fitnessList.push_back(chromosome->fitnessScore);
-		if (chromosome->fitnessScore > getCurrentBestsolution()->fitnessScore)
+		if (chromosome->fitnessScore > getFittestChromosome()->fitnessScore)
 		{
-			currentBestSolution = chromosome;
+			fittestChromosome = chromosome;
+			setFittestChromosome(chromosome);
 		}
 	}
-	std::cout << "current best pt is: " << currentBestSolution->fitnessScore << std::endl;
 }
 
 Chromosome *Selection::concludeTournament(
@@ -129,12 +164,12 @@ Chromosome *Selection::concludeTournament(
 	}
 }
 
-Chromosome *Selection::getCurrentBestsolution()
+Chromosome *Selection::getFittestChromosome()
 {
-	return currentBestSolution;
+	return fittestChromosome;
 }
 
-void Selection::setCurrentBestsolution(Chromosome *chromosome)
+void Selection::setFittestChromosome(Chromosome *chromosome)
 {
-	currentBestSolution = chromosome;
+	fittestChromosome = chromosome;
 }
