@@ -2,7 +2,8 @@
 #include <vector>
 #include <iostream>
 
-class SolutionChecker {
+class SolutionChecker
+{
 public:
     bool checkSolution(std::vector<std::string> solution);
     int checkAndReturnLastIndex(std::vector<std::string> solution);

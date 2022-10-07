@@ -5,35 +5,35 @@
 class Selection
 {
 private:
-	Chromosome * currentBestSolution;
+	Chromosome *currentBestSolution;
 	UniformDistributionGenerator uniformDistGenerator;
+
 public:
-	std::vector<Chromosome*> randomParentSelection(
-		std::vector<Chromosome*> population);
+	std::vector<Chromosome *> randomParentSelection(
+		std::vector<Chromosome *> population);
 
-	std::vector<Chromosome*> tournamentParentSelection(
-		std::vector<Chromosome*> population);
+	std::vector<Chromosome *> tournamentParentSelection(
+		std::vector<Chromosome *> population);
 
-	std::vector<Chromosome*> elitistSurvivorSelection(
-		std::vector<Chromosome*> parents, 
-		std::vector<Chromosome*> children);
+	std::vector<Chromosome *> elitistSurvivorSelection(
+		std::vector<Chromosome *> parents,
+		std::vector<Chromosome *> children);
 
-	std::vector<Chromosome*> crowdingSurvivalSelection(
-		std::vector<Chromosome*> parents,
-		std::vector<Chromosome*> children);
+	std::vector<Chromosome *> crowdingSurvivalSelection(
+		std::vector<Chromosome *> parents,
+		std::vector<Chromosome *> children);
 
-	std::vector<Chromosome*> randomSurvivorSelection(
-		std::vector<Chromosome*> parents,
-		std::vector<Chromosome*> children);
+	std::vector<Chromosome *> randomSurvivorSelection(
+		std::vector<Chromosome *> parents,
+		std::vector<Chromosome *> children);
 
-	Chromosome* concludeTournament(
-		Chromosome* firstChromosome,
-		Chromosome* secondChromosome);
+	Chromosome *concludeTournament(
+		Chromosome *firstChromosome,
+		Chromosome *secondChromosome);
 
-	void selectBest(std::vector<Chromosome*> population);
+	void selectBest(std::vector<Chromosome *> population);
 
-	Chromosome* getCurrentBestsolution();
+	Chromosome *getCurrentBestsolution();
 
-	void setCurrentBestsolution(Chromosome* chromosome);
+	void setCurrentBestsolution(Chromosome *chromosome);
 };
-

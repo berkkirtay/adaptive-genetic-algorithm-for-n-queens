@@ -6,7 +6,8 @@
 #include "Chromosome.h"
 #include "Selection.h"
 
-class GeneticAlgorithm {
+class GeneticAlgorithm
+{
 private:
 	int tableSize = 1;
 	int popSize = 0;
@@ -21,7 +22,7 @@ public:
 	~GeneticAlgorithm();
 	void process();
 	void calculatePopulationDiversity();
-	std::vector<Chromosome*> breedChildChromosomes(std::vector<Chromosome*> parents);
-	std::vector<Chromosome*> cutAndCrossfillCrossover(Chromosome* firstParent, Chromosome* secondParent);
-	void mutation(std::vector<Chromosome*>& chromosomes);
+	std::vector<Chromosome *> breedChildChromosomes(std::vector<Chromosome *> parents);
+	std::vector<Chromosome *> cutAndCrossfillCrossover(Chromosome *firstParent, Chromosome *secondParent);
+	void mutation(std::vector<Chromosome *> &chromosomes);
 };
