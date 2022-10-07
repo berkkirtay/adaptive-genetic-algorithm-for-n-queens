@@ -5,46 +5,46 @@
 class Selection
 {
 private:
-	Chromosome *fittestChromosome;
-	UniformDistributionGenerator uniformDistGenerator;
+    Chromosome *fittestChromosome;
+    UniformDistributionGenerator uniformDistGenerator;
 
 public:
-	~Selection();
+    ~Selection();
 
-	std::vector<Chromosome *> igniteParentSelection(
-		std::vector<Chromosome *> population,
-		double populationVariance);
+    std::vector<Chromosome *> igniteParentSelection(
+        std::vector<Chromosome *> population,
+        double populationVariance);
 
-	std::vector<Chromosome *> igniteSurvivalSelection(
-		std::vector<Chromosome *> parents,
-		std::vector<Chromosome *> children,
-		double populationVariance);
+    std::vector<Chromosome *> igniteSurvivalSelection(
+        std::vector<Chromosome *> parents,
+        std::vector<Chromosome *> children,
+        double populationVariance);
 
-	std::vector<Chromosome *> randomParentSelection(
-		std::vector<Chromosome *> population);
+    std::vector<Chromosome *> randomParentSelection(
+        std::vector<Chromosome *> population);
 
-	std::vector<Chromosome *> tournamentParentSelection(
-		std::vector<Chromosome *> population);
+    std::vector<Chromosome *> tournamentParentSelection(
+        std::vector<Chromosome *> population);
 
-	std::vector<Chromosome *> elitistSurvivorSelection(
-		std::vector<Chromosome *> parents,
-		std::vector<Chromosome *> children);
+    std::vector<Chromosome *> elitistSurvivorSelection(
+        std::vector<Chromosome *> parents,
+        std::vector<Chromosome *> children);
 
-	std::vector<Chromosome *> crowdingSurvivalSelection(
-		std::vector<Chromosome *> parents,
-		std::vector<Chromosome *> children);
+    std::vector<Chromosome *> crowdingSurvivalSelection(
+        std::vector<Chromosome *> parents,
+        std::vector<Chromosome *> children);
 
-	std::vector<Chromosome *> randomSurvivorSelection(
-		std::vector<Chromosome *> parents,
-		std::vector<Chromosome *> children);
+    std::vector<Chromosome *> randomSurvivorSelection(
+        std::vector<Chromosome *> parents,
+        std::vector<Chromosome *> children);
 
-	Chromosome *concludeTournament(
-		Chromosome *firstChromosome,
-		Chromosome *secondChromosome);
+    Chromosome *concludeTournament(
+        Chromosome *firstChromosome,
+        Chromosome *secondChromosome);
 
-	void selectFittest(std::vector<Chromosome *> population);
+    void selectFittest(std::vector<Chromosome *> population);
 
-	Chromosome *getFittestChromosome();
+    Chromosome *getFittestChromosome();
 
-	void setFittestChromosome(Chromosome *chromosome);
+    void setFittestChromosome(Chromosome *chromosome);
 };

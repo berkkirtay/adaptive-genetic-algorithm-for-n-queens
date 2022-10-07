@@ -52,10 +52,10 @@ void GeneticAlgorithm::process()
             break;
         }
 
-        if (i % 1 == 0)
+        if (i % 10 == 0)
             calculatePopulationDiversity();
 
-        if (i % 100 == 0)
+        if (i % 50 == 0)
         {
             printInfo();
             means.push_back(populationMean);
