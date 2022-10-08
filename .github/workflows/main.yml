@@ -32,4 +32,4 @@ jobs:
       - name: Project build
         run: |
           cd build
-          ./build.sh
+          sudo ./build.sh
