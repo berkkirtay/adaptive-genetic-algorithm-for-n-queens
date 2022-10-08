@@ -7,9 +7,9 @@ Mutation::Mutation(double mutationPressure)
 
 void Mutation::mutate(std::vector<Chromosome *> &chromosomes, double populationVariance)
 {
-    int tableSize = chromosomes.front()->genes.size();
     if (populationVariance < mutationPressure)
     {
+        int tableSize = chromosomes.front()->genes.size();
         for (auto chromosome : chromosomes)
         {
             int firstRandom = uniformDistGenerator.generate(tableSize - 1);

@@ -49,15 +49,7 @@ void Chromosome::copyGenes(std::vector<int> genes)
 void Chromosome::calculateFitness()
 {
     bool isValid = TableViewConverter::instance()->validateSolution(genes);
-    if (isValid)
-    {
-        fitnessScore = genes.size();
-    }
-    else
-    {
-        // Calculate the fitness score of the unseccessful chromosomes.
-        fitnessScore = TableViewConverter::instance()->currentFitnessScore;
-    }
+    fitnessScore = TableViewConverter::instance()->currentFitnessScore;
 }
 
 bool Chromosome::compare(const Chromosome *a, const Chromosome *b)

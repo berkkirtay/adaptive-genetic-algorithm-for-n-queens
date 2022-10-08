@@ -17,11 +17,11 @@ public:
 
     ~Selection();
 
-    std::vector<Chromosome *> igniteParentSelection(
+    std::vector<Chromosome *> applyParentSelection(
         std::vector<Chromosome *> population,
         double populationVariance);
 
-    std::vector<Chromosome *> igniteSurvivalSelection(
+    std::vector<Chromosome *> applySurvivorSelection(
         std::vector<Chromosome *> parents,
         std::vector<Chromosome *> children,
         double populationVariance);
@@ -36,7 +36,7 @@ public:
         std::vector<Chromosome *> parents,
         std::vector<Chromosome *> children);
 
-    std::vector<Chromosome *> crowdingSurvivalSelection(
+    std::vector<Chromosome *> crowdingSurvivorSelection(
         std::vector<Chromosome *> parents,
         std::vector<Chromosome *> children);
 

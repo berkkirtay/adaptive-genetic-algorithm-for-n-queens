@@ -13,7 +13,7 @@ Selection::~Selection()
     delete fittestChromosome;
 }
 
-std::vector<Chromosome *> Selection::igniteParentSelection(
+std::vector<Chromosome *> Selection::applyParentSelection(
     std::vector<Chromosome *> population, double populationVariance)
 {
     std::vector<Chromosome *> parents;
@@ -29,7 +29,7 @@ std::vector<Chromosome *> Selection::igniteParentSelection(
     return parents;
 }
 
-std::vector<Chromosome *> Selection::igniteSurvivalSelection(
+std::vector<Chromosome *> Selection::applySurvivorSelection(
     std::vector<Chromosome *> parents, std::vector<Chromosome *> children, double populationVariance)
 {
     std::vector<Chromosome *> survivors;
@@ -41,7 +41,7 @@ std::vector<Chromosome *> Selection::igniteSurvivalSelection(
     else
     {
         // Exploitation
-        survivors = crowdingSurvivalSelection(parents, children);
+        survivors = crowdingSurvivorSelection(parents, children);
     }
     return survivors;
 }
@@ -94,7 +94,7 @@ std::vector<Chromosome *> Selection::tournamentParentSelection(
     return winners;
 }
 
-std::vector<Chromosome *> Selection::crowdingSurvivalSelection(
+std::vector<Chromosome *> Selection::crowdingSurvivorSelection(
     std::vector<Chromosome *> parents,
     std::vector<Chromosome *> children)
 {

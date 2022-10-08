@@ -32,12 +32,12 @@ void GeneticAlgorithm::process()
 {
     for (int i = 0; i < 8000; i++)
     {
-        auto parents = selection->igniteParentSelection(population, populationVariance);
+        auto parents = selection->applyParentSelection(population, populationVariance);
 
         auto children = recombination.breedChildChromosomes(parents);
         mutation->mutate(children, populationVariance);
 
-        auto survivors = selection->igniteSurvivalSelection(parents, children, populationVariance);
+        auto survivors = selection->applySurvivorSelection(parents, children, populationVariance);
 
         for (int i = 0; i < survivors.size(); i++)
         {
@@ -51,6 +51,7 @@ void GeneticAlgorithm::process()
         if (isValid == true)
         {
             calculatePopulationDiversity();
+            printInfo();
             TableViewConverter::instance()->printValidTable();
             break;
         }

@@ -8,8 +8,8 @@ void exportData(std::vector<double> means, std::vector<double> variances);
 
 int main()
 {
-    int tableSize = 30;
-    double populationEquation = floor(pow(1.1, tableSize));
+    int tableSize = 37;
+    double populationEquation = floor(pow(1.06, tableSize));
     int popSize = floor(tableSize * populationEquation);
 
     std::cout

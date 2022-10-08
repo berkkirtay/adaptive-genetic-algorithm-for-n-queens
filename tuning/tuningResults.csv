@@ -1,4 +1,5 @@
-TableSize,  PopSize,  parentSelectionPressure, survivalSelectionPressure, mutationPressure, executionTime
-   20,	     120,			0.2,					         0.5,			            1.2,		         1s
-   21,	     147,			0.2,					         0.5,			            1.2,		         3s
-   30,	     510,			1,					            0.5,			            2,		            22s
+TableSize,PopSize,ParentSelectionPressure,SurvivorSelectionPressure,MutationPressure,ExecutionTime
+20,120,0.2,0.5,1.2,1s
+21,147,0.2,0.5,1.2,3s
+30,510,1,0.5,2,22s
+37,296,1,0.5,2,114s
