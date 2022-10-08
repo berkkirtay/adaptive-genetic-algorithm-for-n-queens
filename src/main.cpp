@@ -2,17 +2,14 @@
 #include <iostream>
 #include <chrono>
 #include <fstream>
-#include "BacktrackingAlgorithm.h"
 #include "GeneticAlgorithm.h"
 
 void exportData(std::vector<double> means, std::vector<double> variances);
 
 int main()
 {
-    // BacktrackingAlgorithm backtrackingAlgorithm;
-    //  backtrackingAlgorithm.solveNQueens(10);
-    int tableSize = 15;
-    double populationEquation = floor(pow(1.4, tableSize));
+    int tableSize = 30;
+    double populationEquation = floor(pow(1.1, tableSize));
     int popSize = floor(tableSize * populationEquation);
 
     std::cout

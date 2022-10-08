@@ -2,7 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <memory>
-#include "SolutionChecker.h"
+#include "FitnessChecker.h"
 #include "Chromosome.h"
 #include "Selection.h"
 #include "Mutation.h"
@@ -15,8 +15,8 @@ private:
     int popSize = 0;
     double populationVariance = 0;
     double populationMean = 0;
-    Mutation mutation;
-    Selection selection;
+    std::unique_ptr<Mutation> mutation;
+    std::unique_ptr<Selection> selection;
     Recombination recombination;
     std::vector<Chromosome *> population;
     UniformDistributionGenerator uniformDistGenerator;

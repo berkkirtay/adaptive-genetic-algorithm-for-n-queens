@@ -1,9 +1,14 @@
 #include "Mutation.h"
 
+Mutation::Mutation(double mutationPressure)
+{
+    this->mutationPressure = mutationPressure;
+}
+
 void Mutation::mutate(std::vector<Chromosome *> &chromosomes, double populationVariance)
 {
     int tableSize = chromosomes.front()->genes.size();
-    if (populationVariance < 0.6)
+    if (populationVariance < mutationPressure)
     {
         for (auto chromosome : chromosomes)
         {

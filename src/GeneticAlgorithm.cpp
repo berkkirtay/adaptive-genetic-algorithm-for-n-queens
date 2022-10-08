@@ -5,6 +5,9 @@ GeneticAlgorithm::GeneticAlgorithm(int tableSize, int popSize)
     this->tableSize = tableSize;
     this->popSize = popSize;
 
+    mutation = std::make_unique<Mutation>(Mutation(2));
+    selection = std::make_unique<Selection>(Selection(1, 0.5));
+
     for (int i = 0; i < popSize; i++)
     {
         auto chromosome = new Chromosome(tableSize);
@@ -14,7 +17,7 @@ GeneticAlgorithm::GeneticAlgorithm(int tableSize, int popSize)
         population.push_back(chromosome);
     }
 
-    selection.setFittestChromosome(population[0]);
+    selection->setFittestChromosome(population[0]);
 }
 
 GeneticAlgorithm::~GeneticAlgorithm()
@@ -29,12 +32,12 @@ void GeneticAlgorithm::process()
 {
     for (int i = 0; i < 8000; i++)
     {
-        auto parents = selection.igniteParentSelection(population, populationVariance);
+        auto parents = selection->igniteParentSelection(population, populationVariance);
 
         auto children = recombination.breedChildChromosomes(parents);
-        mutation.mutate(children, populationVariance);
+        mutation->mutate(children, populationVariance);
 
-        auto survivors = selection.igniteSurvivalSelection(parents, children, populationVariance);
+        auto survivors = selection->igniteSurvivalSelection(parents, children, populationVariance);
 
         for (int i = 0; i < survivors.size(); i++)
         {
@@ -52,10 +55,9 @@ void GeneticAlgorithm::process()
             break;
         }
 
-        if (i % 10 == 0)
-            calculatePopulationDiversity();
+        calculatePopulationDiversity();
 
-        if (i % 50 == 0)
+        if (i % 100 == 0)
         {
             printInfo();
             means.push_back(populationMean);
@@ -66,20 +68,21 @@ void GeneticAlgorithm::process()
 
 bool GeneticAlgorithm::checkFittestChromosome()
 {
-    selection.selectFittest(population);
-    return selection.getFittestChromosome()->fitnessScore >= tableSize;
+    selection->selectFittest(population);
+    return selection->getFittestChromosome()->fitnessScore >= tableSize;
 }
 
 void GeneticAlgorithm::calculatePopulationDiversity()
 {
     double mean = 0;
+    double variance = 0;
+
     for (auto chromosome : population)
     {
         mean += chromosome->fitnessScore;
     }
     mean /= popSize;
 
-    double variance = 0;
     for (auto chromosome : population)
     {
         variance += pow(static_cast<double>(chromosome->fitnessScore) - mean, 2);
@@ -91,7 +94,8 @@ void GeneticAlgorithm::calculatePopulationDiversity()
 
 void GeneticAlgorithm::printInfo()
 {
-    std::cout << "Population variance: " << populationVariance << std::endl;
+    std::cout << "Population variance: " << populationVariance
+              << " Population mean: " << populationMean << std::endl;
     std::cout << "Score of the fittest chromosome is "
-              << selection.getFittestChromosome()->fitnessScore << std::endl;
+              << selection->getFittestChromosome()->fitnessScore << std::endl;
 }

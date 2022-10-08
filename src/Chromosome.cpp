@@ -13,6 +13,7 @@ void Chromosome::generateRandomly()
     {
         sampledGenes.push_back(i);
     }
+
     for (int i = 0; i < size; i++)
     {
         if (sampledGenes.size() == 1)
@@ -55,7 +56,7 @@ void Chromosome::calculateFitness()
     else
     {
         // Calculate the fitness score of the unseccessful chromosomes.
-        fitnessScore = TableViewConverter::instance()->lastIndex;
+        fitnessScore = TableViewConverter::instance()->currentFitnessScore;
     }
 }
 

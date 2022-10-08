@@ -25,9 +25,9 @@ std::vector<std::string> TableViewConverter::convertToTable(std::vector<int> gen
 bool TableViewConverter::validateSolution(std::vector<int> genes)
 {
     auto table = convertToTable(genes);
-    lastIndex = sc.checkAndReturnLastIndex(table);
+    currentFitnessScore = sc.calculateFitnessFunction(table);
 
-    if (lastIndex == table.size() - 1)
+    if (currentFitnessScore == table.size())
     {
         std::cout
             << "A valid table is constructed!"

@@ -1,5 +1,13 @@
 #include "Selection.h"
 
+Selection::Selection(
+    double parentSelectionPressure,
+    double survivalSelectionPressure)
+{
+    this->parentSelectionPressure;
+    this->survivalSelectionPressure;
+}
+
 Selection::~Selection()
 {
     delete fittestChromosome;
@@ -10,7 +18,7 @@ std::vector<Chromosome *> Selection::igniteParentSelection(
 {
     std::vector<Chromosome *> parents;
 
-    if (populationVariance < 0.2)
+    if (populationVariance < parentSelectionPressure)
     {
         parents = randomParentSelection(population);
     }
@@ -25,7 +33,7 @@ std::vector<Chromosome *> Selection::igniteSurvivalSelection(
     std::vector<Chromosome *> parents, std::vector<Chromosome *> children, double populationVariance)
 {
     std::vector<Chromosome *> survivors;
-    if (populationVariance < 0.5)
+    if (populationVariance < survivalSelectionPressure)
     {
         // Exploration
         survivors = randomSurvivorSelection(parents, children);

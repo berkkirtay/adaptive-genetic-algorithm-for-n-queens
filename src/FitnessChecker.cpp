@@ -1,15 +1,8 @@
-#include "SolutionChecker.h"
+#include "FitnessChecker.h"
 
-int SolutionChecker::checkAndReturnLastIndex(
-    std::vector<std::string> solution)
+int FitnessChecker::calculateFitnessFunction(std::vector<std::string> solution)
 {
-    checkSolution(solution);
-    return lastIndex;
-}
-
-bool SolutionChecker::checkSolution(std::vector<std::string> solution)
-{
-    lastIndex = 0;
+    int penalty = 0;
     int size = static_cast<int>(solution.size());
     std::vector<bool> columnUsage(size, false);
     for (int j = 0; j < size; j++)
@@ -25,17 +18,16 @@ bool SolutionChecker::checkSolution(std::vector<std::string> solution)
                 }
                 else
                 {
-                    return false;
+                    penalty++;
                 }
             }
         }
-        lastIndex = j;
     }
-    return true;
+    return solution.size() - penalty;
 }
 
-bool SolutionChecker::isAValidPlacement(int i, int j, int n,
-                                        std::vector<std::string> curr)
+bool FitnessChecker::isAValidPlacement(int i, int j, int n,
+                                       std::vector<std::string> curr)
 {
     int x = 0;
     int y = 0;

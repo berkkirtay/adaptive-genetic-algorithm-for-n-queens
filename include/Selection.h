@@ -5,10 +5,16 @@
 class Selection
 {
 private:
+    double parentSelectionPressure = 0;
+    double survivalSelectionPressure = 0;
     Chromosome *fittestChromosome;
     UniformDistributionGenerator uniformDistGenerator;
 
 public:
+    Selection(
+        double parentSelectionPressure,
+        double survivalSelectionPressure);
+
     ~Selection();
 
     std::vector<Chromosome *> igniteParentSelection(
