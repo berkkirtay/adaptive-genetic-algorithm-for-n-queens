@@ -1,4 +1,6 @@
 # An Adaptive Genetic Algorithm for N-Queens problem
+[![C++ Build CI](https://github.com/berkkirtay/adaptive-genetic-algorithm-for-n-queens/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/berkkirtay/adaptive-genetic-algorithm-for-n-queens/actions/workflows/main.yml)
+
 **I implemented a genetic algorithm for the N-Queens problem with several improvements. 
 This implementation can be a reference point for further developments or a helper to implement 
 algorithms for harder NP problems. GA code is written in C++.** 
@@ -74,5 +76,6 @@ develop a tuner by using the data in that file.
 ## Usage:
 build/run.sh script will run the algorithm after compilation.
 
+## 
 ## TODO: 
 - Implement a tuning algorithm for GA
