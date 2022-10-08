@@ -6,8 +6,8 @@ This implementation can be a reference point for further developments or a helpe
 algorithms for harder NP problems. GA code is written in C++.** 
 
 **To improve the algorithm, a tuner must be developed for different input sizes. For example, 
-the algorithm can find a optimal solution in a neglible time for N=35 but can get stuck at a local optimum for N=36. This
-issue can be overcome by developing a good tuner for the algorithm parametes.** 
+the algorithm can find a optimal solution in a negligible time time for N=35 but can get stuck at a local optimum for N=36. This
+issue can be overcome by developing a good tuner for the algorithm parameters.** 
 
 **Currently, the algorithm has ordinary components of GA. In addition to these, 
 it has a static adaptation feature. A dynamic adaptation(self-adaptation) algorithm 
