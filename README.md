@@ -14,6 +14,19 @@ it has a static adaptation feature. A dynamic adaptation(self-adaptation) algori
 would be developed if the problem had dynamic constraints and parameters.**
 
 ## Components:
+
+### Representation (Genetics)
+An individuals(chromosome) genetics is constructed by permutations. For example, for a N=4 table,
+a sample individual may have the following sequence:
+
+**2413** which represents the following table:
+```
+-Q--
+---Q
+Q---
+--Q-
+```
+
 ### Selection
 The algorithm consists of the following selection mechanisms:
   - Random Parent Selection
@@ -30,7 +43,14 @@ Crossover types:
   - Uniform Crossover
 
 ### Mutation
-Mutation is simply done by swapping genes of a individual.
+Mutation is simply done by swapping genes of an individual.
+
+### Fitness Function
+Individuals fitness scores are calculated by counting how many queens check each other.
+For example, for a N=15 individual if 5 queens check each other then its fitness score 
+will be 10 by the following equation: 
+
+`Fitness = N - queen checks`
 
 ### Adaptation 
 In every new generation, a population variance is calculated and adaptation 
@@ -76,6 +96,8 @@ develop a tuner by using the data in that file.
 ## Usage:
 build/run.sh script will run the algorithm after compilation.
 
-## 
-## TODO: 
-- Implement a tuning algorithm for GA
+## Test Run Example:
+
+
+## References:
+[1]	Eiben, A. and Smith, J., 2015. Introduction to Evolutionary Computing. 2nd ed. Berlin: Springer.
