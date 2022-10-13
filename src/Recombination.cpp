@@ -6,7 +6,9 @@ std::vector<Chromosome *> Recombination::breedChildChromosomes(std::vector<Chrom
     int l = 0, r = parents.size() - 1;
     while (l < r)
     {
-        auto breedChildren = cutAndCrossfillCrossover(parents[l], parents[r]);
+        auto breedChildren = uniformCrossover(parents[l], parents[r]);
+        breedChildren[0]->calculateFitness();
+        breedChildren[1]->calculateFitness();
         children.push_back(breedChildren[0]);
         children.push_back(breedChildren[1]);
         l++;
@@ -20,31 +22,50 @@ std::vector<Chromosome *> Recombination::cutAndCrossfillCrossover(
     Chromosome *firstParent,
     Chromosome *secondParent)
 {
-    std::vector<Chromosome *> children;
     int genesSize = firstParent->genes.size();
-    int random = uniformDistGenerator.generate(genesSize - 1);
 
-    std::vector<int> firstChildsGenes(genesSize);
-    std::vector<int> secondtChildsGenes(genesSize);
+    Chromosome *firstChildren = new Chromosome(genesSize);
+    Chromosome *secondChildren = new Chromosome(genesSize);
+
+    int random = uniformDistGenerator.generate(genesSize - 1);
 
     for (int i = 0; i < random; i++)
     {
-        firstChildsGenes[i] = firstParent->genes[i];
-        secondtChildsGenes[i] = secondParent->genes[i];
+        firstChildren->genes[i] = firstParent->genes[i];
+        secondChildren->genes[i] = secondParent->genes[i];
     }
 
     for (int i = random; i < genesSize; i++)
     {
-        firstChildsGenes[i] = secondParent->genes[i];
-        secondtChildsGenes[i] = firstParent->genes[i];
+        firstChildren->genes[i] = secondParent->genes[i];
+        secondChildren->genes[i] = firstParent->genes[i];
     }
 
-    auto firstChild = new Chromosome(genesSize);
-    firstChild->copyGenes(firstChildsGenes);
-    auto secondChild = new Chromosome(genesSize);
-    secondChild->copyGenes(secondtChildsGenes);
+    return {firstChildren, secondChildren};
+}
 
-    children.push_back(firstChild);
-    children.push_back(secondChild);
-    return children;
+std::vector<Chromosome *> Recombination::uniformCrossover(
+    Chromosome *firstParent,
+    Chromosome *secondParent)
+{
+    int genesSize = firstParent->genes.size();
+
+    Chromosome *firstChildren = new Chromosome(genesSize);
+    Chromosome *secondChildren = new Chromosome(genesSize);
+
+    for (int i = 0; i < genesSize; i++)
+    {
+        if (i % 2 == 0)
+        {
+            firstChildren->genes[i] = firstParent->genes[i];
+            secondChildren->genes[i] = secondParent->genes[i];
+        }
+        else
+        {
+            firstChildren->genes[i] = secondParent->genes[i];
+            secondChildren->genes[i] = firstParent->genes[i];
+        }
+    }
+
+    return {firstChildren, secondChildren};
 }

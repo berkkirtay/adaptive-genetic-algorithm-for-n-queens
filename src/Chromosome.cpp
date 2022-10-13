@@ -48,7 +48,7 @@ void Chromosome::copyGenes(std::vector<int> genes)
 
 void Chromosome::calculateFitness()
 {
-    bool isValid = TableViewConverter::instance()->validateSolution(genes);
+    TableViewConverter::instance()->validateSolution(genes);
     fitnessScore = TableViewConverter::instance()->currentFitnessScore;
 }
 

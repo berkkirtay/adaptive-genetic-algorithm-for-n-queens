@@ -1,12 +1,17 @@
 #include "GeneticAlgorithm.h"
 
-GeneticAlgorithm::GeneticAlgorithm(int tableSize, int popSize)
+GeneticAlgorithm::GeneticAlgorithm(int tableSize,
+                                   int popSize,
+                                   double parentSelectionPressure,
+                                   double survivorSelectionPressure,
+                                   double mutationPressure)
 {
     this->tableSize = tableSize;
     this->popSize = popSize;
 
-    mutation = std::make_unique<Mutation>(Mutation(2));
-    selection = std::make_unique<Selection>(Selection(1, 0.5));
+    mutation = std::make_unique<Mutation>(Mutation(mutationPressure));
+    selection = std::make_unique<Selection>(Selection(parentSelectionPressure,
+                                                      survivorSelectionPressure));
 
     for (int i = 0; i < popSize; i++)
     {

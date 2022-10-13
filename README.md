@@ -10,7 +10,7 @@ the algorithm can find a optimal solution in a negligible time time for N=35 but
 issue can be overcome by developing a good tuner for the algorithm parameters.** 
 
 **Currently, the algorithm has ordinary components of GA. In addition to these, 
-it has a static adaptation feature. A dynamic adaptation(self-adaptation) algorithm 
+it has a static adaptation feature. Moreover, a dynamic adaptation(self-adaptation) algorithm 
 would be developed if the problem had dynamic constraints and parameters.**
 
 ## Components:
@@ -95,6 +95,10 @@ develop a tuner by using the data in that file.
 
 ## Usage:
 build/run.sh script will run the algorithm after compilation.
+
+The script must run with specified arguments. An example may be like:
+
+**$ ./run.sh -t 20 -p 200 -pp 2 -sp 1 -mp 5**
 
 ## Test Run Example:
 

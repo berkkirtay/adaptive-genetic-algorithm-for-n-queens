@@ -27,7 +27,11 @@ private:
 public:
     std::vector<double> means;
     std::vector<double> variances;
-    GeneticAlgorithm(int tableSize, int popSize);
+    GeneticAlgorithm(int tableSize,
+                     int popSize,
+                     double parentSelectionPressure,
+                     double survivalSelectionPressure,
+                     double mutationPressure);
     ~GeneticAlgorithm();
     void process();
 };
