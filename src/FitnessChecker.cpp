@@ -1,67 +1,42 @@
 #include "FitnessChecker.h"
 
-int FitnessChecker::calculateFitnessFunction(std::vector<std::string> solution)
+FitnessChecker::FitnessChecker() {}
+
+std::shared_ptr<FitnessChecker>
+FitnessChecker::instance()
 {
-    int penalty = 0;
-    int size = static_cast<int>(solution.size());
-    std::vector<bool> columnUsage(size, false);
-    for (int j = 0; j < size; j++)
-    {
-        for (int i = 0; i < size; i++)
-        {
-            if (solution[j][i] == 'Q')
-            {
-                if (columnUsage[i] == false &&
-                    isAValidPlacement(i, j, size, solution) == true)
-                {
-                    columnUsage[i] = true;
-                }
-                else
-                {
-                    penalty++;
-                }
-            }
-        }
-    }
-    return solution.size() - penalty;
+    static std::shared_ptr<FitnessChecker> fitnessChecker{new FitnessChecker};
+    return fitnessChecker;
 }
 
-bool FitnessChecker::isAValidPlacement(int i, int j, int n,
-                                       std::vector<std::string> curr)
+void FitnessChecker::checkSolution(std::vector<int> genes)
 {
-    int x = 0;
-    int y = 0;
-    while (x < n)
-    {
-        if (j != x && curr[x][i] == 'Q')
-        {
-            return false;
-        }
-        x++;
-    }
+    currentFitnessScore = calculateFitnessFunction(genes);
 
-    x = j - 1;
-    y = i - 1;
-    while (x >= 0 && y >= 0)
+    if (currentFitnessScore == genes.size())
     {
-        if (curr[x][y] == 'Q')
-        {
-            return false;
-        }
-        x--;
-        y--;
+        TableViewConverter::instance()->convertToTable(genes);
     }
+}
 
-    x = j - 1;
-    y = i + 1;
-    while (x >= 0 && y < n)
+int FitnessChecker::calculateFitnessFunction(std::vector<int> genes)
+{
+    int penalty = 0;
+    int size = static_cast<int>(genes.size());
+
+    for (int i = 0; i < size; i++)
     {
-        if (curr[x][y] == 'Q')
+        int j = 1;
+        while (j < i)
         {
-            return false;
+            if (!(genes[i - j] != genes[i] - j &&
+                  genes[i - j] != genes[i] + j &&
+                  genes[i - j] != genes[i]))
+            {
+                penalty++;
+            }
+            j++;
         }
-        x--;
-        y++;
     }
-    return true;
+    return size - penalty;
 }

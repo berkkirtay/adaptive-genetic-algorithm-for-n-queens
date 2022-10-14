@@ -1,6 +1,5 @@
 #pragma once
-#include <climits>
-#include "TableViewConverter.h"
+#include "FitnessChecker.h"
 #include "UniformDistributionGenerator.h"
 
 class Chromosome
@@ -20,5 +19,4 @@ public:
     void copyGenes(std::vector<int> genes);
     void calculateFitness();
     static bool compare(const Chromosome *a, const Chromosome *b);
-    // bool operator > (const Chromosome chromosome) const;
 };

@@ -12,6 +12,7 @@ GeneticAlgorithm::GeneticAlgorithm(int tableSize,
     mutation = std::make_unique<Mutation>(Mutation(mutationPressure));
     selection = std::make_unique<Selection>(Selection(parentSelectionPressure,
                                                       survivorSelectionPressure));
+    recombination = std::make_unique<Recombination>(Recombination(parentSelectionPressure));
 
     for (int i = 0; i < popSize; i++)
     {
@@ -35,35 +36,25 @@ GeneticAlgorithm::~GeneticAlgorithm()
 
 void GeneticAlgorithm::process()
 {
-    for (int i = 0; i < 8000; i++)
+    for (int i = 0; i < 4000; i++)
     {
         auto parents = selection->applyParentSelection(population, populationVariance);
-
-        auto children = recombination.breedChildChromosomes(parents);
+        auto children = recombination->breedChildChromosomes(parents, populationVariance);
         mutation->mutate(children, populationVariance);
 
         auto survivors = selection->applySurvivorSelection(parents, children, populationVariance);
-
-        for (int i = 0; i < survivors.size(); i++)
-        {
-            survivors[i]->index = parents[i]->index;
-            population[parents[i]->index] = survivors[i];
-            survivors[i] = nullptr;
-            delete survivors[i];
-        }
+        removeUnfitChromosomes(parents, survivors);
+        calculatePopulationDiversity();
 
         bool isValid = checkFittestChromosome();
         if (isValid == true)
         {
-            calculatePopulationDiversity();
             printInfo();
             TableViewConverter::instance()->printValidTable();
             break;
         }
 
-        calculatePopulationDiversity();
-
-        if (i % 100 == 0)
+        if (i % 500 == 0)
         {
             printInfo();
             means.push_back(populationMean);
@@ -72,10 +63,22 @@ void GeneticAlgorithm::process()
     }
 }
 
+void GeneticAlgorithm::removeUnfitChromosomes(std::vector<Chromosome *> &parents,
+                                              std::vector<Chromosome *> &survivors)
+{
+    for (int i = 0; i < survivors.size(); i++)
+    {
+        survivors[i]->index = parents[i]->index;
+        population[parents[i]->index] = survivors[i];
+        survivors[i] = nullptr;
+        delete survivors[i];
+    }
+}
+
 bool GeneticAlgorithm::checkFittestChromosome()
 {
     selection->selectFittest(population);
-    return selection->getFittestChromosome()->fitnessScore >= tableSize;
+    return selection->getFittestChromosome()->fitnessScore == tableSize;
 }
 
 void GeneticAlgorithm::calculatePopulationDiversity()

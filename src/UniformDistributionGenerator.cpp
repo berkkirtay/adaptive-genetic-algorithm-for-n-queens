@@ -2,7 +2,7 @@
 
 UniformDistributionGenerator::UniformDistributionGenerator()
 {
-    // std::mt19937::result_type seed = time(NULL);
+    std::mt19937::result_type seed = time(NULL);
 }
 
 int UniformDistributionGenerator::generate(int max)

@@ -6,9 +6,12 @@ class Recombination
 {
 private:
     UniformDistributionGenerator uniformDistGenerator;
+    double selectionPressure = 0;
 
 public:
-    std::vector<Chromosome *> breedChildChromosomes(std::vector<Chromosome *> parents);
+    Recombination(double selectionPressure);
+    std::vector<Chromosome *> breedChildChromosomes(std::vector<Chromosome *> parents,
+                                                    double populationVariance);
     std::vector<Chromosome *> cutAndCrossfillCrossover(
         Chromosome *firstParent, Chromosome *secondParent);
     std::vector<Chromosome *> uniformCrossover(

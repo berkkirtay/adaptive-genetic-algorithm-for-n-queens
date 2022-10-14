@@ -12,7 +12,6 @@ void exportData(std::vector<double> means, std::vector<double> variances);
 int main(int argc, char **argv)
 {
     auto parameters = parseArgs(argc, argv);
-
     /*
         int tableSize = 40;
         int popSize = 300;
@@ -20,10 +19,7 @@ int main(int argc, char **argv)
         double survivorSelectionPressure = 2;
         double mutationPressure = 4;
     */
-    for (auto s : parameters)
-    {
-        std::cout << s << std::endl;
-    }
+
     int tableSize = static_cast<int>(parameters[0]);
     int popSize = static_cast<int>(parameters[1]);
     double parentSelectionPressure = parameters[2];
@@ -47,8 +43,8 @@ int main(int argc, char **argv)
     ga.process();
     auto end = std::chrono::steady_clock::now();
 
-    auto runtime = std::chrono::duration_cast<std::chrono::seconds>(end - begin).count();
-    std::cout << "Runtime: " << runtime << " seconds." << std::endl;
+    auto runtime = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+    std::cout << "Runtime: " << (double)runtime / 1000 << " seconds." << std::endl;
 
     exportData(ga.means, ga.variances);
     return 0;

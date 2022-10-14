@@ -1,6 +1,6 @@
 TableSize,PopSize,ParentSelectionPressure,SurvivorSelectionPressure,MutationPressure,ExecutionTime
-20,120,0.2,0.5,1.2,1s
-21,147,0.2,0.5,1.2,3s
-30,510,1,0.5,2,22s
-37,296,1,0.5,2,114s
-40,300,3,2,4,67s
+20,120,0.2,0.5,1.2,0s
+25,150,0.2,0.5,1.2,9s
+30,400,1,0.5,2,3s
+40,500,1,0.5,10,5s
+50,500,3,2,10,33s

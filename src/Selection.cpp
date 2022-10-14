@@ -38,10 +38,16 @@ std::vector<Chromosome *> Selection::applySurvivorSelection(
         // Exploration
         survivors = randomSurvivorSelection(parents, children);
     }
-    else
+    else if (populationVariance >=
+             survivalSelectionPressure * survivalSelectionPressure)
     {
         // Exploitation
         survivors = crowdingSurvivorSelection(parents, children);
+    }
+    else
+    {
+        // Exploitation
+        survivors = elitistSurvivorSelection(parents, children);
     }
     return survivors;
 }

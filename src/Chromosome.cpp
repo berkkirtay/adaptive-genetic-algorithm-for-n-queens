@@ -48,8 +48,8 @@ void Chromosome::copyGenes(std::vector<int> genes)
 
 void Chromosome::calculateFitness()
 {
-    TableViewConverter::instance()->validateSolution(genes);
-    fitnessScore = TableViewConverter::instance()->currentFitnessScore;
+    FitnessChecker::instance()->checkSolution(genes);
+    fitnessScore = FitnessChecker::instance()->currentFitnessScore;
 }
 
 bool Chromosome::compare(const Chromosome *a, const Chromosome *b)

@@ -15,14 +15,16 @@ private:
     int popSize = 0;
     double populationVariance = 0;
     double populationMean = 0;
-    std::unique_ptr<Mutation> mutation;
     std::unique_ptr<Selection> selection;
-    Recombination recombination;
+    std::unique_ptr<Recombination> recombination;
+    std::unique_ptr<Mutation> mutation;
     std::vector<Chromosome *> population;
     UniformDistributionGenerator uniformDistGenerator;
     void printInfo();
     bool checkFittestChromosome();
     void calculatePopulationDiversity();
+    void removeUnfitChromosomes(std::vector<Chromosome *> &parents,
+                                std::vector<Chromosome *> &survivors);
 
 public:
     std::vector<double> means;

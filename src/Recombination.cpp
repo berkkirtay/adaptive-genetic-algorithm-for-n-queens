@@ -1,12 +1,27 @@
 #include "Recombination.h"
 
-std::vector<Chromosome *> Recombination::breedChildChromosomes(std::vector<Chromosome *> parents)
+Recombination::Recombination(double selectionPressure)
+{
+    this->selectionPressure = selectionPressure;
+}
+
+std::vector<Chromosome *> Recombination::breedChildChromosomes(std::vector<Chromosome *> parents,
+                                                               double populationVariance)
 {
     std::vector<Chromosome *> children;
     int l = 0, r = parents.size() - 1;
     while (l < r)
     {
-        auto breedChildren = uniformCrossover(parents[l], parents[r]);
+        std::vector<Chromosome *> breedChildren;
+        if (populationVariance < selectionPressure)
+        {
+            breedChildren = uniformCrossover(parents[l], parents[r]);
+        }
+        else
+        {
+            breedChildren = cutAndCrossfillCrossover(parents[l], parents[r]);
+        }
+
         breedChildren[0]->calculateFitness();
         breedChildren[1]->calculateFitness();
         children.push_back(breedChildren[0]);
