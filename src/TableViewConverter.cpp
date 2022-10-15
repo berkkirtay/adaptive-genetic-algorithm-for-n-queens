@@ -12,10 +12,12 @@ TableViewConverter::instance()
 void TableViewConverter::convertToTable(std::vector<int> genes)
 {
     std::vector<std::string> table;
-    for (int i = 0; i < genes.size(); i++)
+    auto tableSize = static_cast<int>(genes.size());
+
+    for (auto i = 0; i < tableSize; i++)
     {
         std::string row = "";
-        for (int j = 0; j < genes.size(); j++)
+        for (int j = 0; j < tableSize; j++)
         {
             row += '-';
         }

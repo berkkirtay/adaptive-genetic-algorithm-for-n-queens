@@ -66,6 +66,7 @@ std::vector<double> parseArgs(int argc, char **argv)
     {
         std::cout
             << "FAILURE: Incorrect number of arguments!\n"
+            << argc << " given, 11 required.\n"
             << usage
             << std::endl;
         exit(EXIT_FAILURE);

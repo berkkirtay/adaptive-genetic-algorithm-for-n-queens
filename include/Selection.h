@@ -1,17 +1,21 @@
 #pragma once
 #include "Chromosome.h"
+#include "UniformDistributionGenerator.h"
 #include <algorithm>
 
 class Selection
 {
 private:
+    int popSize = 0;
+    int popSelectionSize = 0;
     double parentSelectionPressure = 0;
     double survivalSelectionPressure = 0;
     Chromosome *fittestChromosome;
-    UniformDistributionGenerator uniformDistGenerator;
 
 public:
     Selection(
+        int popSize,
+        int popSelectionSize,
         double parentSelectionPressure,
         double survivalSelectionPressure);
 

@@ -1,2 +1,2 @@
 #!/bin/bash
-g++ -o main -I ../include/ -std=c++17 ../src/*.cpp 
+g++ -o main -I ../include/ ../src/*.cpp --std=c++17 -Wall -Wextra

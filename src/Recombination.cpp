@@ -1,7 +1,11 @@
 #include "Recombination.h"
 
-Recombination::Recombination(double selectionPressure)
+Recombination::Recombination(int chromosomeSize,
+                             int popSelectionSize,
+                             double selectionPressure)
 {
+    this->chromosomeSize = chromosomeSize;
+    this->popSelectionSize = popSelectionSize;
     this->selectionPressure = selectionPressure;
 }
 
@@ -9,21 +13,19 @@ std::vector<Chromosome *> Recombination::breedChildChromosomes(std::vector<Chrom
                                                                double populationVariance)
 {
     std::vector<Chromosome *> children;
-    int l = 0, r = parents.size() - 1;
+    auto l = 0, r = popSelectionSize - 1;
     while (l < r)
     {
         std::vector<Chromosome *> breedChildren;
         if (populationVariance < selectionPressure)
         {
-            breedChildren = uniformCrossover(parents[l], parents[r]);
+            breedChildren = cutAndCrossfillCrossover(parents[l], parents[r]);
         }
         else
         {
             breedChildren = cutAndCrossfillCrossover(parents[l], parents[r]);
         }
 
-        breedChildren[0]->calculateFitness();
-        breedChildren[1]->calculateFitness();
         children.push_back(breedChildren[0]);
         children.push_back(breedChildren[1]);
         l++;
@@ -37,20 +39,18 @@ std::vector<Chromosome *> Recombination::cutAndCrossfillCrossover(
     Chromosome *firstParent,
     Chromosome *secondParent)
 {
-    int genesSize = firstParent->genes.size();
+    Chromosome *firstChildren = new Chromosome(chromosomeSize);
+    Chromosome *secondChildren = new Chromosome(chromosomeSize);
 
-    Chromosome *firstChildren = new Chromosome(genesSize);
-    Chromosome *secondChildren = new Chromosome(genesSize);
+    auto random = UniformDistributionGenerator::instance()->generate(chromosomeSize - 1);
 
-    int random = uniformDistGenerator.generate(genesSize - 1);
-
-    for (int i = 0; i < random; i++)
+    for (auto i = 0; i < random; i++)
     {
         firstChildren->genes[i] = firstParent->genes[i];
         secondChildren->genes[i] = secondParent->genes[i];
     }
 
-    for (int i = random; i < genesSize; i++)
+    for (auto i = random; i < chromosomeSize; i++)
     {
         firstChildren->genes[i] = secondParent->genes[i];
         secondChildren->genes[i] = firstParent->genes[i];
@@ -63,12 +63,10 @@ std::vector<Chromosome *> Recombination::uniformCrossover(
     Chromosome *firstParent,
     Chromosome *secondParent)
 {
-    int genesSize = firstParent->genes.size();
+    Chromosome *firstChildren = new Chromosome(chromosomeSize);
+    Chromosome *secondChildren = new Chromosome(chromosomeSize);
 
-    Chromosome *firstChildren = new Chromosome(genesSize);
-    Chromosome *secondChildren = new Chromosome(genesSize);
-
-    for (int i = 0; i < genesSize; i++)
+    for (auto i = 0; i < chromosomeSize; i++)
     {
         if (i % 2 == 0)
         {

@@ -4,9 +4,6 @@
 
 class Chromosome
 {
-private:
-    UniformDistributionGenerator uniformDistGenerator;
-
 public:
     std::vector<int> genes;
     int size = 0;

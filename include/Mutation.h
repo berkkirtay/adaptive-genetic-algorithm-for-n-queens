@@ -5,10 +5,11 @@
 class Mutation
 {
 private:
+    int chromosomeSize = 0;
     double mutationPressure = 0;
-    UniformDistributionGenerator uniformDistGenerator;
 
 public:
-    Mutation(double mutationPressure);
+    Mutation(int chromosomeSize,
+             double mutationPressure);
     void mutate(std::vector<Chromosome *> &chromosomes, double populationVariance);
 };

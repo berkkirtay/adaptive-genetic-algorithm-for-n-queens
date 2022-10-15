@@ -5,11 +5,13 @@
 class Recombination
 {
 private:
-    UniformDistributionGenerator uniformDistGenerator;
+    int chromosomeSize = 0;
+    int popSelectionSize = 0;
     double selectionPressure = 0;
 
 public:
-    Recombination(double selectionPressure);
+    Recombination(int chromosomeSize,
+                  int popSelectionSize, double selectionPressure);
     std::vector<Chromosome *> breedChildChromosomes(std::vector<Chromosome *> parents,
                                                     double populationVariance);
     std::vector<Chromosome *> cutAndCrossfillCrossover(

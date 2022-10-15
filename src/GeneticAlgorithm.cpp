@@ -9,11 +9,32 @@ GeneticAlgorithm::GeneticAlgorithm(int tableSize,
     this->tableSize = tableSize;
     this->popSize = popSize;
 
-    mutation = std::make_unique<Mutation>(Mutation(mutationPressure));
-    selection = std::make_unique<Selection>(Selection(parentSelectionPressure,
+    auto popSelectionSize = popSize / 5;
+    if (popSelectionSize % 2 == 1)
+    {
+        popSelectionSize++;
+    }
+    mutation = std::make_unique<Mutation>(Mutation(tableSize, mutationPressure));
+    selection = std::make_unique<Selection>(Selection(popSize,
+                                                      popSelectionSize,
+                                                      parentSelectionPressure,
                                                       survivorSelectionPressure));
-    recombination = std::make_unique<Recombination>(Recombination(parentSelectionPressure));
+    recombination = std::make_unique<Recombination>(Recombination(tableSize,
+                                                                  popSelectionSize,
+                                                                  parentSelectionPressure));
+    generateInitialPopulation();
+}
 
+GeneticAlgorithm::~GeneticAlgorithm()
+{
+    for (auto chromosome : population)
+    {
+        delete chromosome;
+    }
+}
+
+void GeneticAlgorithm::generateInitialPopulation()
+{
     for (int i = 0; i < popSize; i++)
     {
         auto chromosome = new Chromosome(tableSize);
@@ -26,17 +47,9 @@ GeneticAlgorithm::GeneticAlgorithm(int tableSize,
     selection->setFittestChromosome(population[0]);
 }
 
-GeneticAlgorithm::~GeneticAlgorithm()
-{
-    for (auto chromosome : population)
-    {
-        delete chromosome;
-    }
-}
-
 void GeneticAlgorithm::process()
 {
-    for (int i = 0; i < 4000; i++)
+    for (int i = 0; i < 100000; i++)
     {
         auto parents = selection->applyParentSelection(population, populationVariance);
         auto children = recombination->breedChildChromosomes(parents, populationVariance);
@@ -44,13 +57,11 @@ void GeneticAlgorithm::process()
 
         auto survivors = selection->applySurvivorSelection(parents, children, populationVariance);
         removeUnfitChromosomes(parents, survivors);
-        calculatePopulationDiversity();
 
+        calculatePopulationDiversity();
         bool isValid = checkFittestChromosome();
         if (isValid == true)
         {
-            printInfo();
-            TableViewConverter::instance()->printValidTable();
             break;
         }
 
@@ -66,7 +77,7 @@ void GeneticAlgorithm::process()
 void GeneticAlgorithm::removeUnfitChromosomes(std::vector<Chromosome *> &parents,
                                               std::vector<Chromosome *> &survivors)
 {
-    for (int i = 0; i < survivors.size(); i++)
+    for (int i = 0; i < static_cast<int>(survivors.size()); i++)
     {
         survivors[i]->index = parents[i]->index;
         population[parents[i]->index] = survivors[i];
@@ -78,7 +89,14 @@ void GeneticAlgorithm::removeUnfitChromosomes(std::vector<Chromosome *> &parents
 bool GeneticAlgorithm::checkFittestChromosome()
 {
     selection->selectFittest(population);
-    return selection->getFittestChromosome()->fitnessScore == tableSize;
+    auto isComplete = FitnessChecker::instance()->checkSolution(
+        selection->getFittestChromosome()->genes);
+    if (isComplete == true)
+    {
+        printInfo();
+        TableViewConverter::instance()->printValidTable();
+    }
+    return isComplete;
 }
 
 void GeneticAlgorithm::calculatePopulationDiversity()

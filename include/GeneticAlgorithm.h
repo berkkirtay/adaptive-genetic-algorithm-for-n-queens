@@ -19,7 +19,7 @@ private:
     std::unique_ptr<Recombination> recombination;
     std::unique_ptr<Mutation> mutation;
     std::vector<Chromosome *> population;
-    UniformDistributionGenerator uniformDistGenerator;
+    void generateInitialPopulation();
     void printInfo();
     bool checkFittestChromosome();
     void calculatePopulationDiversity();

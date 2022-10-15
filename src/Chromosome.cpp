@@ -9,12 +9,12 @@ Chromosome::Chromosome(int size)
 void Chromosome::generateRandomly()
 {
     std::vector<int> sampledGenes;
-    for (int i = 0; i < size; i++)
+    for (auto i = 0; i < size; i++)
     {
         sampledGenes.push_back(i);
     }
 
-    for (int i = 0; i < size; i++)
+    for (auto i = 0; i < size; i++)
     {
         if (sampledGenes.size() == 1)
         {
@@ -22,7 +22,7 @@ void Chromosome::generateRandomly()
         }
         else
         {
-            int random = uniformDistGenerator.generate(sampledGenes.size() - 1);
+            auto random = UniformDistributionGenerator::instance()->generate(sampledGenes.size() - 1);
             genes[i] = sampledGenes[random];
             sampledGenes.erase(sampledGenes.begin() + random);
         }
@@ -32,7 +32,7 @@ void Chromosome::generateRandomly()
 
 void Chromosome::copy(Chromosome chromosome)
 {
-    for (int i = 0; i < chromosome.size; i++)
+    for (auto i = 0; i < chromosome.size; i++)
     {
         genes[i] = chromosome.genes[i];
     }
@@ -48,18 +48,10 @@ void Chromosome::copyGenes(std::vector<int> genes)
 
 void Chromosome::calculateFitness()
 {
-    FitnessChecker::instance()->checkSolution(genes);
-    fitnessScore = FitnessChecker::instance()->currentFitnessScore;
+    fitnessScore = FitnessChecker::instance()->calculateFitnessFunction(genes);
 }
 
 bool Chromosome::compare(const Chromosome *a, const Chromosome *b)
 {
     return a->fitnessScore > b->fitnessScore;
 }
-
-/*
-bool Chromosome:: operator > (const Chromosome chromosome) const
-{
-    return fitnessScore > chromosome.fitnessScore;
-}
-*/
