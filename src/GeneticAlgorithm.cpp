@@ -9,7 +9,7 @@ GeneticAlgorithm::GeneticAlgorithm(int tableSize,
     this->tableSize = tableSize;
     this->popSize = popSize;
 
-    auto popSelectionSize = popSize / 5;
+    auto popSelectionSize = popSize / 10;
     if (popSelectionSize % 2 == 1)
     {
         popSelectionSize++;

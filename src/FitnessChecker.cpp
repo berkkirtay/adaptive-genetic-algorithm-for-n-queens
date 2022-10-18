@@ -25,10 +25,10 @@ int FitnessChecker::calculateFitnessFunction(std::vector<int> &genes)
     auto penalty = 0;
     auto size = static_cast<int>(genes.size());
 
-    for (auto i = 0; i < size; i++)
+    for (auto i = 1; i < size; i++)
     {
         auto j = 1;
-        while (j < i)
+        while (j <= i)
         {
             if (!(genes[i - j] != genes[i] - j &&
                   genes[i - j] != genes[i] + j &&
