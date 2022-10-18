@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <memory>
+#include <algorithm>
 #include "FitnessChecker.h"
 #include "Chromosome.h"
 #include "Selection.h"

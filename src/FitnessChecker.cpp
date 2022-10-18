@@ -9,7 +9,7 @@ FitnessChecker::instance()
     return fitnessChecker;
 }
 
-bool FitnessChecker::checkSolution(std::vector<int> genes)
+bool FitnessChecker::checkSolution(std::vector<int> &genes)
 {
     currentFitnessScore = calculateFitnessFunction(genes);
     auto isComplete = currentFitnessScore == static_cast<int>(genes.size());
@@ -20,7 +20,7 @@ bool FitnessChecker::checkSolution(std::vector<int> genes)
     return isComplete;
 }
 
-int FitnessChecker::calculateFitnessFunction(std::vector<int> genes)
+int FitnessChecker::calculateFitnessFunction(std::vector<int> &genes)
 {
     auto penalty = 0;
     auto size = static_cast<int>(genes.size());

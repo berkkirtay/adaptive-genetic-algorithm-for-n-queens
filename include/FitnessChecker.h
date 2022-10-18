@@ -12,7 +12,7 @@ public:
     FitnessChecker(FitnessChecker const &) = delete;
     FitnessChecker &operator=(FitnessChecker const &) = delete;
     static std::shared_ptr<FitnessChecker> instance();
-    bool checkSolution(std::vector<int> genes);
-    int calculateFitnessFunction(std::vector<int> genes);
+    bool checkSolution(std::vector<int> &genes);
+    int calculateFitnessFunction(std::vector<int> &genes);
     int currentFitnessScore = 0;
 };

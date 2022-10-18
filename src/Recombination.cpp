@@ -9,7 +9,7 @@ Recombination::Recombination(int chromosomeSize,
     this->selectionPressure = selectionPressure;
 }
 
-std::vector<Chromosome *> Recombination::breedChildChromosomes(std::vector<Chromosome *> parents,
+std::vector<Chromosome *> Recombination::breedChildChromosomes(std::vector<Chromosome *> &parents,
                                                                double populationVariance)
 {
     std::vector<Chromosome *> children;
@@ -17,7 +17,7 @@ std::vector<Chromosome *> Recombination::breedChildChromosomes(std::vector<Chrom
     while (l < r)
     {
         std::vector<Chromosome *> breedChildren;
-        if (populationVariance < selectionPressure)
+        if (populationVariance > selectionPressure)
         {
             breedChildren = cutAndCrossfillCrossover(parents[l], parents[r]);
         }

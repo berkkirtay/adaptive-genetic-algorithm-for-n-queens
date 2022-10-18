@@ -88,10 +88,12 @@ develop a tuner by using the data in that file.
 
 | TableSize(N) | PopSize | ParentSelectionPressure | SurvivorSelectionPressure | MutationPressure | ExecutionTime |
 | :---:        | :---:   | :---:                   |  :---:                    |  :---:           |  :---:        |
-| 20           | 120     | 0.2                     |   0.5                     |   1.2            |  1s           |
-| 21           | 147     | 0.2                     |   0.5                     |   1.2            |  3s           |
-| 30           | 510     | 1                       |   0.5                     |   2              |  22s          |
-| 37           | 296     | 1                       |   0.5                     |   2              |  114s         |
+| 20           | 120     | 0.2                     |   0.5                     |   1.2            |  0.2s         |
+| 21           | 147     | 0.2                     |   0.5                     |   1.2            |  0.3s         |
+| 25           | 250     | 2                       |   3                       |   10             |  0.2s         |
+| 30           | 510     | 1                       |   0.5                     |   2              |  2.2s         |
+| 40           | 400     | 2                       |   3                       |   10             |  1.7s         |
+| 50           | 500     | 2                       |   3                       |   10             |  5.3s         |
 
 ## Usage:
 build/run.sh script will run the algorithm after compilation.

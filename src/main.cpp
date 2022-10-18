@@ -13,11 +13,11 @@ int main(int argc, char **argv)
 {
     auto parameters = parseArgs(argc, argv);
     /*
-        int tableSize = 40;
-        int popSize = 300;
-        double parentSelectionPressure = 3;
-        double survivorSelectionPressure = 2;
-        double mutationPressure = 4;
+        int tableSize = 100;
+        int popSize = 1000;
+        double parentSelectionPressure = 8;
+        double survivorSelectionPressure = 7;
+        double mutationPressure = 30;
     */
 
     int tableSize = static_cast<int>(parameters[0]);

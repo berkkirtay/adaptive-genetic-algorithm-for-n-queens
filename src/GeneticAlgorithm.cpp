@@ -51,6 +51,11 @@ void GeneticAlgorithm::process()
 {
     for (int i = 0; i < 100000; i++)
     {
+        // Shuffling the population array emulates the movements in
+        // the current population and therefore increases random selection.
+        std::shuffle(population.begin(), population.end(),
+                     UniformDistributionGenerator::instance()->getEngine());
+
         auto parents = selection->applyParentSelection(population, populationVariance);
         auto children = recombination->breedChildChromosomes(parents, populationVariance);
         mutation->mutate(children, populationVariance);
@@ -58,7 +63,8 @@ void GeneticAlgorithm::process()
         auto survivors = selection->applySurvivorSelection(parents, children, populationVariance);
         removeUnfitChromosomes(parents, survivors);
 
-        calculatePopulationDiversity();
+        if (i % 10 == 0)
+            calculatePopulationDiversity();
         bool isValid = checkFittestChromosome();
         if (isValid == true)
         {

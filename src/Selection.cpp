@@ -18,23 +18,23 @@ Selection::~Selection()
 }
 
 std::vector<Chromosome *> Selection::applyParentSelection(
-    std::vector<Chromosome *> population, double populationVariance)
+    std::vector<Chromosome *> &population, double populationVariance)
 {
     std::vector<Chromosome *> parents;
 
-    if (populationVariance < parentSelectionPressure)
+    if (populationVariance > parentSelectionPressure)
     {
-        parents = randomParentSelection(population);
+        parents = tournamentParentSelection(population);
     }
     else
     {
-        parents = tournamentParentSelection(population);
+        parents = randomParentSelection(population);
     }
     return parents;
 }
 
 std::vector<Chromosome *> Selection::applySurvivorSelection(
-    std::vector<Chromosome *> parents, std::vector<Chromosome *> children, double populationVariance)
+    std::vector<Chromosome *> &parents, std::vector<Chromosome *> &children, double populationVariance)
 {
     for (const auto &child : children)
     {
@@ -42,21 +42,15 @@ std::vector<Chromosome *> Selection::applySurvivorSelection(
     }
 
     std::vector<Chromosome *> survivors;
-    if (populationVariance < survivalSelectionPressure)
-    {
-        // Exploration
-        survivors = randomSurvivorSelection(parents, children);
-    }
-    else if (populationVariance >=
-             survivalSelectionPressure * survivalSelectionPressure)
+    if (populationVariance > survivalSelectionPressure)
     {
         // Exploitation
         survivors = crowdingSurvivorSelection(parents, children);
     }
     else
     {
-        // Exploitation
-        survivors = elitistSurvivorSelection(parents, children);
+        // Exploration
+        survivors = randomSurvivorSelection(parents, children);
     }
     return survivors;
 }
@@ -100,8 +94,8 @@ std::vector<Chromosome *> Selection::tournamentParentSelection(
 }
 
 std::vector<Chromosome *> Selection::crowdingSurvivorSelection(
-    std::vector<Chromosome *> parents,
-    std::vector<Chromosome *> children)
+    std::vector<Chromosome *> &parents,
+    std::vector<Chromosome *> &children)
 {
     std::vector<Chromosome *> survivors;
     for (auto i = 0; i < popSelectionSize; i++)
@@ -114,8 +108,8 @@ std::vector<Chromosome *> Selection::crowdingSurvivorSelection(
 }
 
 std::vector<Chromosome *> Selection::elitistSurvivorSelection(
-    std::vector<Chromosome *> parents,
-    std::vector<Chromosome *> children)
+    std::vector<Chromosome *> &parents,
+    std::vector<Chromosome *> &children)
 {
     for (auto child : children)
     {
@@ -132,8 +126,8 @@ std::vector<Chromosome *> Selection::elitistSurvivorSelection(
 }
 
 std::vector<Chromosome *> Selection::randomSurvivorSelection(
-    std::vector<Chromosome *> parents,
-    std::vector<Chromosome *> children)
+    std::vector<Chromosome *> &parents,
+    std::vector<Chromosome *> &children)
 {
     std::vector<Chromosome *> survivors;
     for (auto i = 0; i < popSelectionSize; i++)
@@ -151,7 +145,7 @@ std::vector<Chromosome *> Selection::randomSurvivorSelection(
     return survivors;
 }
 
-void Selection::selectFittest(std::vector<Chromosome *> population)
+void Selection::selectFittest(std::vector<Chromosome *> &population)
 {
     for (auto chromosome : population)
     {

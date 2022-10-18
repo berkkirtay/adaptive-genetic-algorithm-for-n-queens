@@ -22,12 +22,12 @@ public:
     ~Selection();
 
     std::vector<Chromosome *> applyParentSelection(
-        std::vector<Chromosome *> population,
+        std::vector<Chromosome *> &population,
         double populationVariance);
 
     std::vector<Chromosome *> applySurvivorSelection(
-        std::vector<Chromosome *> parents,
-        std::vector<Chromosome *> children,
+        std::vector<Chromosome *> &parents,
+        std::vector<Chromosome *> &children,
         double populationVariance);
 
     std::vector<Chromosome *> randomParentSelection(
@@ -37,22 +37,22 @@ public:
         std::vector<Chromosome *> population);
 
     std::vector<Chromosome *> elitistSurvivorSelection(
-        std::vector<Chromosome *> parents,
-        std::vector<Chromosome *> children);
+        std::vector<Chromosome *> &parents,
+        std::vector<Chromosome *> &children);
 
     std::vector<Chromosome *> crowdingSurvivorSelection(
-        std::vector<Chromosome *> parents,
-        std::vector<Chromosome *> children);
+        std::vector<Chromosome *> &parents,
+        std::vector<Chromosome *> &children);
 
     std::vector<Chromosome *> randomSurvivorSelection(
-        std::vector<Chromosome *> parents,
-        std::vector<Chromosome *> children);
+        std::vector<Chromosome *> &parents,
+        std::vector<Chromosome *> &children);
 
     Chromosome *concludeTournament(
         Chromosome *firstChromosome,
         Chromosome *secondChromosome);
 
-    void selectFittest(std::vector<Chromosome *> population);
+    void selectFittest(std::vector<Chromosome *> &population);
 
     Chromosome *getFittestChromosome();
 

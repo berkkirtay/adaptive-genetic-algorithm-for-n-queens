@@ -12,7 +12,7 @@ public:
 
     Chromosome(int size);
     void generateRandomly();
-    void copy(Chromosome chromosome);
+    void copy(Chromosome *chromosome);
     void copyGenes(std::vector<int> genes);
     void calculateFitness();
     static bool compare(const Chromosome *a, const Chromosome *b);

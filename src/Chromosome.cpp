@@ -30,14 +30,14 @@ void Chromosome::generateRandomly()
     calculateFitness();
 }
 
-void Chromosome::copy(Chromosome chromosome)
+void Chromosome::copy(Chromosome *chromosome)
 {
-    for (auto i = 0; i < chromosome.size; i++)
+    for (auto i = 0; i < chromosome->size; i++)
     {
-        genes[i] = chromosome.genes[i];
+        genes[i] = chromosome->genes[i];
     }
-    index = chromosome.index;
-    fitnessScore = chromosome.fitnessScore;
+    index = chromosome->index;
+    fitnessScore = chromosome->fitnessScore;
 }
 
 void Chromosome::copyGenes(std::vector<int> genes)

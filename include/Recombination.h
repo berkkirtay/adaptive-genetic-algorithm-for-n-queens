@@ -12,7 +12,7 @@ private:
 public:
     Recombination(int chromosomeSize,
                   int popSelectionSize, double selectionPressure);
-    std::vector<Chromosome *> breedChildChromosomes(std::vector<Chromosome *> parents,
+    std::vector<Chromosome *> breedChildChromosomes(std::vector<Chromosome *> &parents,
                                                     double populationVariance);
     std::vector<Chromosome *> cutAndCrossfillCrossover(
         Chromosome *firstParent, Chromosome *secondParent);
