@@ -1,4 +1,6 @@
-﻿#include <vector>
+﻿// Copyright (c) 2022 Berk Kırtay
+
+#include <vector>
 #include <iostream>
 #include <chrono>
 #include <fstream>
@@ -152,16 +154,23 @@ void exportData(std::vector<double> means, std::vector<double> variances)
 {
     std::ofstream file;
     file.open("../chart/data.csv");
-    for (auto mean : means)
+    int size = static_cast<int>(means.size());
+    for (auto i = 0; i < size; i++)
     {
-        file << mean << ",";
+        if (i == size - 1)
+            file << means[i];
+        else
+            file << means[i] << ",";
     }
 
     file << std::endl;
 
-    for (auto variance : variances)
+    for (auto i = 0; i < size; i++)
     {
-        file << variance << ",";
+        if (i == size - 1)
+            file << variances[i];
+        else
+            file << variances[i] << ",";
     }
 
     file.close();

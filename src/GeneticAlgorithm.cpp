@@ -25,19 +25,11 @@ GeneticAlgorithm::GeneticAlgorithm(int tableSize,
     generateInitialPopulation();
 }
 
-GeneticAlgorithm::~GeneticAlgorithm()
-{
-    for (auto chromosome : population)
-    {
-        delete chromosome;
-    }
-}
-
 void GeneticAlgorithm::generateInitialPopulation()
 {
     for (int i = 0; i < popSize; i++)
     {
-        auto chromosome = new Chromosome(tableSize);
+        auto chromosome = std::make_shared<Chromosome>(Chromosome(tableSize));
         chromosome->generateRandomly();
         chromosome->index = i;
         chromosome->calculateFitness();
@@ -49,7 +41,7 @@ void GeneticAlgorithm::generateInitialPopulation()
 
 void GeneticAlgorithm::process()
 {
-    for (int i = 0; i < 100000; i++)
+    for (int i = 0; i < 130000; i++)
     {
         // Shuffling the population array emulates the movements in
         // the current population and therefore increases random selection.
@@ -71,7 +63,7 @@ void GeneticAlgorithm::process()
             break;
         }
 
-        if (i % 500 == 0)
+        if (i % 200 == 0)
         {
             printInfo();
             means.push_back(populationMean);
@@ -80,15 +72,13 @@ void GeneticAlgorithm::process()
     }
 }
 
-void GeneticAlgorithm::removeUnfitChromosomes(std::vector<Chromosome *> &parents,
-                                              std::vector<Chromosome *> &survivors)
+void GeneticAlgorithm::removeUnfitChromosomes(std::vector<std::shared_ptr<Chromosome>> &parents,
+                                              std::vector<std::shared_ptr<Chromosome>> &survivors)
 {
     for (int i = 0; i < static_cast<int>(survivors.size()); i++)
     {
         survivors[i]->index = parents[i]->index;
         population[parents[i]->index] = survivors[i];
-        survivors[i] = nullptr;
-        delete survivors[i];
     }
 }
 

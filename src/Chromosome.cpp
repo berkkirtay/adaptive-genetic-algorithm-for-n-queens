@@ -30,7 +30,7 @@ void Chromosome::generateRandomly()
     calculateFitness();
 }
 
-void Chromosome::copy(Chromosome *chromosome)
+void Chromosome::copy(std::shared_ptr<Chromosome> chromosome)
 {
     for (auto i = 0; i < chromosome->size; i++)
     {
@@ -51,7 +51,7 @@ void Chromosome::calculateFitness()
     fitnessScore = FitnessChecker::instance()->calculateFitnessFunction(genes);
 }
 
-bool Chromosome::compare(const Chromosome *a, const Chromosome *b)
+bool Chromosome::compare(const std::shared_ptr<Chromosome> a, const std::shared_ptr<Chromosome> b)
 {
     return a->fitnessScore > b->fitnessScore;
 }

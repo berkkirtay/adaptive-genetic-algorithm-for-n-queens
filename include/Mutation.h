@@ -1,6 +1,7 @@
 #pragma once
 #include "UniformDistributionGenerator.h"
 #include "Chromosome.h"
+#include <memory>
 
 class Mutation
 {
@@ -11,5 +12,5 @@ private:
 public:
     Mutation(int chromosomeSize,
              double mutationPressure);
-    void mutate(std::vector<Chromosome *> &chromosomes, double populationVariance);
+    void mutate(std::vector<std::shared_ptr<Chromosome>> &chromosomes, double populationVariance);
 };

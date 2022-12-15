@@ -14,11 +14,7 @@ def readData():
 
 
 def chartData(means, variances):
-    times = []
-    time = 0
-    for mean in means:
-        times.append(time)
-        time += 1
+    times = [i for i in range(len(means))]
 
     fig, ax1 = plt.subplots()
 

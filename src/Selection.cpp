@@ -12,15 +12,10 @@ Selection::Selection(
     this->survivalSelectionPressure = survivalSelectionPressure;
 }
 
-Selection::~Selection()
+std::vector<std::shared_ptr<Chromosome>> Selection::applyParentSelection(
+    std::vector<std::shared_ptr<Chromosome>> &population, double populationVariance)
 {
-    delete fittestChromosome;
-}
-
-std::vector<Chromosome *> Selection::applyParentSelection(
-    std::vector<Chromosome *> &population, double populationVariance)
-{
-    std::vector<Chromosome *> parents;
+    std::vector<std::shared_ptr<Chromosome>> parents;
 
     if (populationVariance > parentSelectionPressure)
     {
@@ -33,15 +28,15 @@ std::vector<Chromosome *> Selection::applyParentSelection(
     return parents;
 }
 
-std::vector<Chromosome *> Selection::applySurvivorSelection(
-    std::vector<Chromosome *> &parents, std::vector<Chromosome *> &children, double populationVariance)
+std::vector<std::shared_ptr<Chromosome>> Selection::applySurvivorSelection(
+    std::vector<std::shared_ptr<Chromosome>> &parents, std::vector<std::shared_ptr<Chromosome>> &children, double populationVariance)
 {
     for (const auto &child : children)
     {
         child->calculateFitness();
     }
 
-    std::vector<Chromosome *> survivors;
+    std::vector<std::shared_ptr<Chromosome>> survivors;
     if (populationVariance > survivalSelectionPressure)
     {
         // Exploitation
@@ -55,9 +50,9 @@ std::vector<Chromosome *> Selection::applySurvivorSelection(
     return survivors;
 }
 
-std::vector<Chromosome *> Selection::randomParentSelection(std::vector<Chromosome *> population)
+std::vector<std::shared_ptr<Chromosome>> Selection::randomParentSelection(std::vector<std::shared_ptr<Chromosome>> population)
 {
-    std::vector<Chromosome *> parents;
+    std::vector<std::shared_ptr<Chromosome>> parents;
     int currentPopSize = popSize - 1;
     for (auto i = 0; i < popSelectionSize; i++)
     {
@@ -68,10 +63,10 @@ std::vector<Chromosome *> Selection::randomParentSelection(std::vector<Chromosom
     return parents;
 }
 
-std::vector<Chromosome *> Selection::tournamentParentSelection(
-    std::vector<Chromosome *> population)
+std::vector<std::shared_ptr<Chromosome>> Selection::tournamentParentSelection(
+    std::vector<std::shared_ptr<Chromosome>> population)
 {
-    std::vector<Chromosome *> winners;
+    std::vector<std::shared_ptr<Chromosome>> winners;
     int currentPopSize = popSize - 1;
     // The random number generator should not generate a
     // same parent twice. So we erase the chosen parent
@@ -93,11 +88,11 @@ std::vector<Chromosome *> Selection::tournamentParentSelection(
     return winners;
 }
 
-std::vector<Chromosome *> Selection::crowdingSurvivorSelection(
-    std::vector<Chromosome *> &parents,
-    std::vector<Chromosome *> &children)
+std::vector<std::shared_ptr<Chromosome>> Selection::crowdingSurvivorSelection(
+    std::vector<std::shared_ptr<Chromosome>> &parents,
+    std::vector<std::shared_ptr<Chromosome>> &children)
 {
-    std::vector<Chromosome *> survivors;
+    std::vector<std::shared_ptr<Chromosome>> survivors;
     for (auto i = 0; i < popSelectionSize; i++)
     {
         auto winner = concludeTournament(parents[i], children[i]);
@@ -107,9 +102,9 @@ std::vector<Chromosome *> Selection::crowdingSurvivorSelection(
     return survivors;
 }
 
-std::vector<Chromosome *> Selection::elitistSurvivorSelection(
-    std::vector<Chromosome *> &parents,
-    std::vector<Chromosome *> &children)
+std::vector<std::shared_ptr<Chromosome>> Selection::elitistSurvivorSelection(
+    std::vector<std::shared_ptr<Chromosome>> &parents,
+    std::vector<std::shared_ptr<Chromosome>> &children)
 {
     for (auto child : children)
     {
@@ -125,11 +120,11 @@ std::vector<Chromosome *> Selection::elitistSurvivorSelection(
     return parents;
 }
 
-std::vector<Chromosome *> Selection::randomSurvivorSelection(
-    std::vector<Chromosome *> &parents,
-    std::vector<Chromosome *> &children)
+std::vector<std::shared_ptr<Chromosome>> Selection::randomSurvivorSelection(
+    std::vector<std::shared_ptr<Chromosome>> &parents,
+    std::vector<std::shared_ptr<Chromosome>> &children)
 {
-    std::vector<Chromosome *> survivors;
+    std::vector<std::shared_ptr<Chromosome>> survivors;
     for (auto i = 0; i < popSelectionSize; i++)
     {
         auto random = UniformDistributionGenerator::instance()->generate(10);
@@ -145,7 +140,7 @@ std::vector<Chromosome *> Selection::randomSurvivorSelection(
     return survivors;
 }
 
-void Selection::selectFittest(std::vector<Chromosome *> &population)
+void Selection::selectFittest(std::vector<std::shared_ptr<Chromosome>> &population)
 {
     for (auto chromosome : population)
     {
@@ -156,9 +151,9 @@ void Selection::selectFittest(std::vector<Chromosome *> &population)
     }
 }
 
-Chromosome *Selection::concludeTournament(
-    Chromosome *firstChromosome,
-    Chromosome *secondChromosome)
+std::shared_ptr<Chromosome> Selection::concludeTournament(
+    std::shared_ptr<Chromosome> firstChromosome,
+    std::shared_ptr<Chromosome> secondChromosome)
 {
     if (firstChromosome->fitnessScore > secondChromosome->fitnessScore)
     {
@@ -170,12 +165,12 @@ Chromosome *Selection::concludeTournament(
     }
 }
 
-void Selection::setFittestChromosome(Chromosome *chromosome)
+void Selection::setFittestChromosome(std::shared_ptr<Chromosome> chromosome)
 {
     fittestChromosome = chromosome;
 }
 
-Chromosome *Selection::getFittestChromosome()
+std::shared_ptr<Chromosome> Selection::getFittestChromosome()
 {
     return fittestChromosome;
 }

@@ -67,17 +67,16 @@ two basic search behaviors: **Exploration and exploitation**.
 
 The following code block explains this approach for survival selection:
 ```cpp
- if (populationVariance < survivalSelectionPressure)
-    {
-        // Exploration
-        survivors = randomSurvivorSelection(parents, children);
-    }
-    else
-    {
-        // Exploitation
-        survivors = crowdingSurvivalSelection(parents, children);
-    }
-    return survivors;
+if (populationVariance < survivalSelectionPressure)
+{
+    // Exploration
+    survivors = randomSurvivorSelection(parents, children);
+}
+else
+{
+    // Exploitation
+    survivors = crowdingSurvivalSelection(parents, children);
+}
 ```
 
 ### Tuner

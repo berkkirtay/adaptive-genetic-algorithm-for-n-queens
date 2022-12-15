@@ -1,6 +1,7 @@
 #pragma once
 #include "FitnessChecker.h"
 #include "UniformDistributionGenerator.h"
+#include <memory>
 
 class Chromosome
 {
@@ -12,8 +13,8 @@ public:
 
     Chromosome(int size);
     void generateRandomly();
-    void copy(Chromosome *chromosome);
+    void copy(std::shared_ptr<Chromosome> chromosome);
     void copyGenes(std::vector<int> genes);
     void calculateFitness();
-    static bool compare(const Chromosome *a, const Chromosome *b);
+    static bool compare(const std::shared_ptr<Chromosome> a, const std::shared_ptr<Chromosome> b);
 };

@@ -6,7 +6,7 @@ Mutation::Mutation(int chromosomeSize, double mutationPressure)
     this->mutationPressure = mutationPressure;
 }
 
-void Mutation::mutate(std::vector<Chromosome *> &chromosomes, double populationVariance)
+void Mutation::mutate(std::vector<std::shared_ptr<Chromosome>> &chromosomes, double populationVariance)
 {
     if (populationVariance < mutationPressure)
     {

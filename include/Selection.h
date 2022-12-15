@@ -2,6 +2,7 @@
 #include "Chromosome.h"
 #include "UniformDistributionGenerator.h"
 #include <algorithm>
+#include <memory>
 
 class Selection
 {
@@ -10,7 +11,7 @@ private:
     int popSelectionSize = 0;
     double parentSelectionPressure = 0;
     double survivalSelectionPressure = 0;
-    Chromosome *fittestChromosome;
+    std::shared_ptr<Chromosome> fittestChromosome;
 
 public:
     Selection(
@@ -19,42 +20,40 @@ public:
         double parentSelectionPressure,
         double survivalSelectionPressure);
 
-    ~Selection();
-
-    std::vector<Chromosome *> applyParentSelection(
-        std::vector<Chromosome *> &population,
+    std::vector<std::shared_ptr<Chromosome>> applyParentSelection(
+        std::vector<std::shared_ptr<Chromosome>> &population,
         double populationVariance);
 
-    std::vector<Chromosome *> applySurvivorSelection(
-        std::vector<Chromosome *> &parents,
-        std::vector<Chromosome *> &children,
+    std::vector<std::shared_ptr<Chromosome>> applySurvivorSelection(
+        std::vector<std::shared_ptr<Chromosome>> &parents,
+        std::vector<std::shared_ptr<Chromosome>> &children,
         double populationVariance);
 
-    std::vector<Chromosome *> randomParentSelection(
-        std::vector<Chromosome *> population);
+    std::vector<std::shared_ptr<Chromosome>> randomParentSelection(
+        std::vector<std::shared_ptr<Chromosome>> population);
 
-    std::vector<Chromosome *> tournamentParentSelection(
-        std::vector<Chromosome *> population);
+    std::vector<std::shared_ptr<Chromosome>> tournamentParentSelection(
+        std::vector<std::shared_ptr<Chromosome>> population);
 
-    std::vector<Chromosome *> elitistSurvivorSelection(
-        std::vector<Chromosome *> &parents,
-        std::vector<Chromosome *> &children);
+    std::vector<std::shared_ptr<Chromosome>> elitistSurvivorSelection(
+        std::vector<std::shared_ptr<Chromosome>> &parents,
+        std::vector<std::shared_ptr<Chromosome>> &children);
 
-    std::vector<Chromosome *> crowdingSurvivorSelection(
-        std::vector<Chromosome *> &parents,
-        std::vector<Chromosome *> &children);
+    std::vector<std::shared_ptr<Chromosome>> crowdingSurvivorSelection(
+        std::vector<std::shared_ptr<Chromosome>> &parents,
+        std::vector<std::shared_ptr<Chromosome>> &children);
 
-    std::vector<Chromosome *> randomSurvivorSelection(
-        std::vector<Chromosome *> &parents,
-        std::vector<Chromosome *> &children);
+    std::vector<std::shared_ptr<Chromosome>> randomSurvivorSelection(
+        std::vector<std::shared_ptr<Chromosome>> &parents,
+        std::vector<std::shared_ptr<Chromosome>> &children);
 
-    Chromosome *concludeTournament(
-        Chromosome *firstChromosome,
-        Chromosome *secondChromosome);
+    std::shared_ptr<Chromosome> concludeTournament(
+        std::shared_ptr<Chromosome> firstChromosome,
+        std::shared_ptr<Chromosome> secondChromosome);
 
-    void selectFittest(std::vector<Chromosome *> &population);
+    void selectFittest(std::vector<std::shared_ptr<Chromosome>> &population);
 
-    Chromosome *getFittestChromosome();
+    std::shared_ptr<Chromosome> getFittestChromosome();
 
-    void setFittestChromosome(Chromosome *chromosome);
+    void setFittestChromosome(std::shared_ptr<Chromosome> chromosome);
 };

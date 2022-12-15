@@ -19,13 +19,13 @@ private:
     std::unique_ptr<Selection> selection;
     std::unique_ptr<Recombination> recombination;
     std::unique_ptr<Mutation> mutation;
-    std::vector<Chromosome *> population;
+    std::vector<std::shared_ptr<Chromosome>> population;
     void generateInitialPopulation();
     void printInfo();
     bool checkFittestChromosome();
     void calculatePopulationDiversity();
-    void removeUnfitChromosomes(std::vector<Chromosome *> &parents,
-                                std::vector<Chromosome *> &survivors);
+    void removeUnfitChromosomes(std::vector<std::shared_ptr<Chromosome>> &parents,
+                                std::vector<std::shared_ptr<Chromosome>> &survivors);
 
 public:
     std::vector<double> means;
@@ -35,6 +35,5 @@ public:
                      double parentSelectionPressure,
                      double survivalSelectionPressure,
                      double mutationPressure);
-    ~GeneticAlgorithm();
     void process();
 };

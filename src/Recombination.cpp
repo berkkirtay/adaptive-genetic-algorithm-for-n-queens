@@ -9,14 +9,14 @@ Recombination::Recombination(int chromosomeSize,
     this->selectionPressure = selectionPressure;
 }
 
-std::vector<Chromosome *> Recombination::breedChildChromosomes(std::vector<Chromosome *> &parents,
-                                                               double populationVariance)
+std::vector<std::shared_ptr<Chromosome>> Recombination::breedChildChromosomes(std::vector<std::shared_ptr<Chromosome>> &parents,
+                                                                              double populationVariance)
 {
-    std::vector<Chromosome *> children;
+    std::vector<std::shared_ptr<Chromosome>> children;
     auto l = 0, r = popSelectionSize - 1;
     while (l < r)
     {
-        std::vector<Chromosome *> breedChildren;
+        std::vector<std::shared_ptr<Chromosome>> breedChildren;
         if (populationVariance > selectionPressure)
         {
             breedChildren = cutAndCrossfillCrossover(parents[l], parents[r]);
@@ -35,12 +35,12 @@ std::vector<Chromosome *> Recombination::breedChildChromosomes(std::vector<Chrom
     return children;
 }
 
-std::vector<Chromosome *> Recombination::cutAndCrossfillCrossover(
-    Chromosome *firstParent,
-    Chromosome *secondParent)
+std::vector<std::shared_ptr<Chromosome>> Recombination::cutAndCrossfillCrossover(
+    std::shared_ptr<Chromosome> firstParent,
+    std::shared_ptr<Chromosome> secondParent)
 {
-    Chromosome *firstChildren = new Chromosome(chromosomeSize);
-    Chromosome *secondChildren = new Chromosome(chromosomeSize);
+    auto firstChildren = std::make_shared<Chromosome>(Chromosome(chromosomeSize));
+    auto secondChildren = std::make_shared<Chromosome>(Chromosome(chromosomeSize));
 
     auto random = UniformDistributionGenerator::instance()->generate(chromosomeSize - 1);
 
@@ -59,12 +59,12 @@ std::vector<Chromosome *> Recombination::cutAndCrossfillCrossover(
     return {firstChildren, secondChildren};
 }
 
-std::vector<Chromosome *> Recombination::uniformCrossover(
-    Chromosome *firstParent,
-    Chromosome *secondParent)
+std::vector<std::shared_ptr<Chromosome>> Recombination::uniformCrossover(
+    std::shared_ptr<Chromosome> firstParent,
+    std::shared_ptr<Chromosome> secondParent)
 {
-    Chromosome *firstChildren = new Chromosome(chromosomeSize);
-    Chromosome *secondChildren = new Chromosome(chromosomeSize);
+    auto firstChildren = std::make_shared<Chromosome>(Chromosome(chromosomeSize));
+    auto secondChildren = std::make_shared<Chromosome>(Chromosome(chromosomeSize));
 
     for (auto i = 0; i < chromosomeSize; i++)
     {

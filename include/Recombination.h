@@ -1,6 +1,7 @@
 #pragma once
 #include "UniformDistributionGenerator.h"
 #include "Chromosome.h"
+#include <memory>
 
 class Recombination
 {
@@ -12,11 +13,11 @@ private:
 public:
     Recombination(int chromosomeSize,
                   int popSelectionSize, double selectionPressure);
-    std::vector<Chromosome *> breedChildChromosomes(std::vector<Chromosome *> &parents,
-                                                    double populationVariance);
-    std::vector<Chromosome *> cutAndCrossfillCrossover(
-        Chromosome *firstParent, Chromosome *secondParent);
-    std::vector<Chromosome *> uniformCrossover(
-        Chromosome *firstParent,
-        Chromosome *secondParent);
+    std::vector<std::shared_ptr<Chromosome>> breedChildChromosomes(std::vector<std::shared_ptr<Chromosome>> &parents,
+                                                                   double populationVariance);
+    std::vector<std::shared_ptr<Chromosome>> cutAndCrossfillCrossover(
+        std::shared_ptr<Chromosome> firstParent, std::shared_ptr<Chromosome> secondParent);
+    std::vector<std::shared_ptr<Chromosome>> uniformCrossover(
+        std::shared_ptr<Chromosome> firstParent,
+        std::shared_ptr<Chromosome> secondParent);
 };
