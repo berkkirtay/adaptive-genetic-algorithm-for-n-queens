@@ -10,7 +10,11 @@ private:
     double mutationPressure = 0;
 
 public:
-    Mutation(int chromosomeSize,
-             double mutationPressure);
-    void mutate(std::vector<std::shared_ptr<Chromosome>> &chromosomes, double populationVariance);
+    Mutation(
+        int chromosomeSize,
+        double mutationPressure);
+
+    void mutate(
+        std::vector<std::shared_ptr<Chromosome>> &chromosomes,
+        double populationVariance);
 };

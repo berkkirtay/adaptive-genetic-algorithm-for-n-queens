@@ -1,31 +1,21 @@
 #include "Recombination.h"
 
-Recombination::Recombination(int chromosomeSize,
-                             int popSelectionSize,
-                             double selectionPressure)
+Recombination::Recombination(
+    int chromosomeSize,
+    int popSelectionSize)
 {
     this->chromosomeSize = chromosomeSize;
     this->popSelectionSize = popSelectionSize;
-    this->selectionPressure = selectionPressure;
 }
 
-std::vector<std::shared_ptr<Chromosome>> Recombination::breedChildChromosomes(std::vector<std::shared_ptr<Chromosome>> &parents,
-                                                                              double populationVariance)
+std::vector<std::shared_ptr<Chromosome>> Recombination::breedChildChromosomes(
+    std::vector<std::shared_ptr<Chromosome>> &parents)
 {
     std::vector<std::shared_ptr<Chromosome>> children;
     auto l = 0, r = popSelectionSize - 1;
     while (l < r)
     {
-        std::vector<std::shared_ptr<Chromosome>> breedChildren;
-        if (populationVariance > selectionPressure)
-        {
-            breedChildren = cutAndCrossfillCrossover(parents[l], parents[r]);
-        }
-        else
-        {
-            breedChildren = cutAndCrossfillCrossover(parents[l], parents[r]);
-        }
-
+        auto breedChildren = cutAndCrossfillCrossover(parents[l], parents[r]);
         children.push_back(breedChildren[0]);
         children.push_back(breedChildren[1]);
         l++;

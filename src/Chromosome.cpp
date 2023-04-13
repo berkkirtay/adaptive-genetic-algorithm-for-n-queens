@@ -22,12 +22,12 @@ void Chromosome::generateRandomly()
         }
         else
         {
-            auto random = UniformDistributionGenerator::instance()->generate(sampledGenes.size() - 1);
+            auto random = UniformDistributionGenerator::instance()
+                              ->generate(sampledGenes.size() - 1);
             genes[i] = sampledGenes[random];
             sampledGenes.erase(sampledGenes.begin() + random);
         }
     }
-    calculateFitness();
 }
 
 void Chromosome::copy(std::shared_ptr<Chromosome> chromosome)
@@ -51,7 +51,9 @@ void Chromosome::calculateFitness()
     fitnessScore = FitnessChecker::instance()->calculateFitnessFunction(genes);
 }
 
-bool Chromosome::compare(const std::shared_ptr<Chromosome> a, const std::shared_ptr<Chromosome> b)
+bool Chromosome::compare(
+    const std::shared_ptr<Chromosome> a,
+    const std::shared_ptr<Chromosome> b)
 {
     return a->fitnessScore > b->fitnessScore;
 }

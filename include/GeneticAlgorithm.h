@@ -12,28 +12,33 @@
 class GeneticAlgorithm
 {
 private:
-    int tableSize = 1;
+    int tableSize = 0;
     int popSize = 0;
     double populationVariance = 0;
     double populationMean = 0;
+    int numberOfMaxGenerations = 0;
+    int generationIndex = 0;
     std::unique_ptr<Selection> selection;
     std::unique_ptr<Recombination> recombination;
     std::unique_ptr<Mutation> mutation;
     std::vector<std::shared_ptr<Chromosome>> population;
     void generateInitialPopulation();
-    void printInfo();
-    bool checkFittestChromosome();
+    void printGenerationInfoAndSaveStatistics();
+    bool checkFittestChromosome(
+        std::vector<std::shared_ptr<Chromosome>> &survivors);
     void calculatePopulationDiversity();
-    void removeUnfitChromosomes(std::vector<std::shared_ptr<Chromosome>> &parents,
-                                std::vector<std::shared_ptr<Chromosome>> &survivors);
+    void removeUnfitChromosomes(
+        std::vector<std::shared_ptr<Chromosome>> &parents,
+        std::vector<std::shared_ptr<Chromosome>> &survivors);
 
 public:
     std::vector<double> means;
     std::vector<double> variances;
-    GeneticAlgorithm(int tableSize,
-                     int popSize,
-                     double parentSelectionPressure,
-                     double survivalSelectionPressure,
-                     double mutationPressure);
+    GeneticAlgorithm(
+        int tableSize,
+        int popSize,
+        double parentSelectionPressure,
+        double survivalSelectionPressure,
+        double mutationPressure);
     void process();
 };

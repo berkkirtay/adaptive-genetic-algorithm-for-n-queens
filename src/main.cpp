@@ -9,7 +9,9 @@
 #include "GeneticAlgorithm.h"
 
 std::vector<double> parseArgs(int argc, char **argv);
-void exportData(std::vector<double> means, std::vector<double> variances);
+void exportData(
+    std::vector<double> means,
+    std::vector<double> variances);
 
 int main(int argc, char **argv)
 {
@@ -29,24 +31,36 @@ int main(int argc, char **argv)
     double mutationPressure = parameters[4];
 
     std::cout
-        << "Table size: " << tableSize << std::endl
-        << "Population Size: " << popSize << std::endl
-        << "Parent Selection Pressure: " << parentSelectionPressure << std::endl
-        << "Survivor Selection Pressure: " << survivorSelectionPressure << std::endl
-        << "Mutation Pressure: " << mutationPressure << std::endl;
+        << "Table size: "
+        << tableSize << std::endl
+        << "Population Size: "
+        << popSize << std::endl
+        << "Parent Selection Pressure: "
+        << parentSelectionPressure << std::endl
+        << "Survivor Selection Pressure: "
+        << survivorSelectionPressure << std::endl
+        << "Mutation Pressure: "
+        << mutationPressure << std::endl
+        << "\n\n"
+        << std::endl;
 
-    GeneticAlgorithm ga(tableSize,
-                        popSize,
-                        parentSelectionPressure,
-                        survivorSelectionPressure,
-                        mutationPressure);
+    GeneticAlgorithm ga(
+        tableSize,
+        popSize,
+        parentSelectionPressure,
+        survivorSelectionPressure,
+        mutationPressure);
 
-    auto begin = std::chrono::steady_clock::now();
+    using namespace std::chrono;
+    auto begin = steady_clock::now();
     ga.process();
-    auto end = std::chrono::steady_clock::now();
+    auto end = steady_clock::now();
 
-    auto runtime = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
-    std::cout << "Runtime: " << (double)runtime / 1000 << " seconds." << std::endl;
+    auto runtime = duration_cast<milliseconds>(end - begin).count();
+    std::cout
+        << "Runtime: "
+        << (double)runtime / 1000
+        << " seconds." << std::endl;
 
     exportData(ga.means, ga.variances);
     return 0;
@@ -150,7 +164,9 @@ std::vector<double> parseArgs(int argc, char **argv)
     return parameters;
 }
 
-void exportData(std::vector<double> means, std::vector<double> variances)
+void exportData(
+    std::vector<double> means,
+    std::vector<double> variances)
 {
     std::ofstream file;
     file.open("../chart/data.csv");

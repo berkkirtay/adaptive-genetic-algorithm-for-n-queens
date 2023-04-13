@@ -16,5 +16,7 @@ public:
     void copy(std::shared_ptr<Chromosome> chromosome);
     void copyGenes(std::vector<int> genes);
     void calculateFitness();
-    static bool compare(const std::shared_ptr<Chromosome> a, const std::shared_ptr<Chromosome> b);
+    static bool compare(
+        const std::shared_ptr<Chromosome> a,
+        const std::shared_ptr<Chromosome> b);
 };

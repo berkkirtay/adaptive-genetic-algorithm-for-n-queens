@@ -13,7 +13,8 @@ Selection::Selection(
 }
 
 std::vector<std::shared_ptr<Chromosome>> Selection::applyParentSelection(
-    std::vector<std::shared_ptr<Chromosome>> &population, double populationVariance)
+    std::vector<std::shared_ptr<Chromosome>> &population,
+    double populationVariance)
 {
     std::vector<std::shared_ptr<Chromosome>> parents;
 
@@ -29,7 +30,9 @@ std::vector<std::shared_ptr<Chromosome>> Selection::applyParentSelection(
 }
 
 std::vector<std::shared_ptr<Chromosome>> Selection::applySurvivorSelection(
-    std::vector<std::shared_ptr<Chromosome>> &parents, std::vector<std::shared_ptr<Chromosome>> &children, double populationVariance)
+    std::vector<std::shared_ptr<Chromosome>> &parents,
+    std::vector<std::shared_ptr<Chromosome>> &children,
+    double populationVariance)
 {
     for (const auto &child : children)
     {
@@ -50,7 +53,8 @@ std::vector<std::shared_ptr<Chromosome>> Selection::applySurvivorSelection(
     return survivors;
 }
 
-std::vector<std::shared_ptr<Chromosome>> Selection::randomParentSelection(std::vector<std::shared_ptr<Chromosome>> population)
+std::vector<std::shared_ptr<Chromosome>> Selection::randomParentSelection(
+    std::vector<std::shared_ptr<Chromosome>> population)
 {
     std::vector<std::shared_ptr<Chromosome>> parents;
     int currentPopSize = popSize - 1;

@@ -8,20 +8,29 @@ GeneticAlgorithm::GeneticAlgorithm(int tableSize,
 {
     this->tableSize = tableSize;
     this->popSize = popSize;
-
+    this->numberOfMaxGenerations = 20000;
     auto popSelectionSize = popSize / 10;
     if (popSelectionSize % 2 == 1)
     {
         popSelectionSize++;
     }
-    mutation = std::make_unique<Mutation>(Mutation(tableSize, mutationPressure));
-    selection = std::make_unique<Selection>(Selection(popSize,
-                                                      popSelectionSize,
-                                                      parentSelectionPressure,
-                                                      survivorSelectionPressure));
-    recombination = std::make_unique<Recombination>(Recombination(tableSize,
-                                                                  popSelectionSize,
-                                                                  parentSelectionPressure));
+    mutation = std::make_unique<Mutation>(
+        Mutation(
+            tableSize,
+            mutationPressure));
+
+    selection = std::make_unique<Selection>(
+        Selection(
+            popSize,
+            popSelectionSize,
+            parentSelectionPressure,
+            survivorSelectionPressure));
+
+    recombination = std::make_unique<Recombination>(
+        Recombination(
+            tableSize,
+            popSelectionSize));
+
     generateInitialPopulation();
 }
 
@@ -41,39 +50,45 @@ void GeneticAlgorithm::generateInitialPopulation()
 
 void GeneticAlgorithm::process()
 {
-    for (int i = 0; i < 130000; i++)
+    for (generationIndex = 0;
+         generationIndex < numberOfMaxGenerations;
+         generationIndex++)
     {
-        // Shuffling the population array emulates the movements in
-        // the current population and therefore increases random selection.
-        std::shuffle(population.begin(), population.end(),
-                     UniformDistributionGenerator::instance()->getEngine());
+        /*
+            Shuffling the population array emulates the movements in the
+            current population and therefore increases the randomness of selection.
+        */
 
-        auto parents = selection->applyParentSelection(population, populationVariance);
-        auto children = recombination->breedChildChromosomes(parents, populationVariance);
+        std::shuffle(
+            population.begin(),
+            population.end(),
+            UniformDistributionGenerator::instance()->getEngine());
+
+        auto parents = selection->applyParentSelection(
+            population,
+            populationVariance);
+
+        auto children = recombination->breedChildChromosomes(parents);
         mutation->mutate(children, populationVariance);
 
-        auto survivors = selection->applySurvivorSelection(parents, children, populationVariance);
-        removeUnfitChromosomes(parents, survivors);
+        auto survivors = selection->applySurvivorSelection(
+            parents,
+            children,
+            populationVariance);
 
-        if (i % 10 == 0)
-            calculatePopulationDiversity();
-        bool isValid = checkFittestChromosome();
-        if (isValid == true)
+        removeUnfitChromosomes(parents, survivors);
+        calculatePopulationDiversity();
+        printGenerationInfoAndSaveStatistics();
+        if (checkFittestChromosome(survivors) == true)
         {
             break;
-        }
-
-        if (i % 200 == 0)
-        {
-            printInfo();
-            means.push_back(populationMean);
-            variances.push_back(populationVariance);
         }
     }
 }
 
-void GeneticAlgorithm::removeUnfitChromosomes(std::vector<std::shared_ptr<Chromosome>> &parents,
-                                              std::vector<std::shared_ptr<Chromosome>> &survivors)
+void GeneticAlgorithm::removeUnfitChromosomes(
+    std::vector<std::shared_ptr<Chromosome>> &parents,
+    std::vector<std::shared_ptr<Chromosome>> &survivors)
 {
     for (int i = 0; i < static_cast<int>(survivors.size()); i++)
     {
@@ -82,43 +97,56 @@ void GeneticAlgorithm::removeUnfitChromosomes(std::vector<std::shared_ptr<Chromo
     }
 }
 
-bool GeneticAlgorithm::checkFittestChromosome()
+bool GeneticAlgorithm::checkFittestChromosome(
+    std::vector<std::shared_ptr<Chromosome>> &survivors)
 {
-    selection->selectFittest(population);
-    auto isComplete = FitnessChecker::instance()->checkSolution(
+    selection->selectFittest(survivors);
+
+    auto isCompleted = FitnessChecker::instance()->checkSolution(
         selection->getFittestChromosome()->genes);
-    if (isComplete == true)
+    if (isCompleted == true)
     {
-        printInfo();
         TableViewConverter::instance()->printValidTable();
     }
-    return isComplete;
+    return isCompleted;
 }
 
 void GeneticAlgorithm::calculatePopulationDiversity()
 {
-    double mean = 0;
-    double variance = 0;
-
-    for (auto chromosome : population)
+    if (generationIndex % 10 == 0)
     {
-        mean += chromosome->fitnessScore;
-    }
-    mean /= popSize;
+        double mean = 0;
+        double variance = 0;
 
-    for (auto chromosome : population)
-    {
-        variance += pow(static_cast<double>(chromosome->fitnessScore) - mean, 2);
+        for (auto chromosome : population)
+        {
+            mean += chromosome->fitnessScore;
+        }
+        mean /= popSize;
+
+        for (auto chromosome : population)
+        {
+            variance += pow(static_cast<double>(chromosome->fitnessScore) - mean, 2);
+        }
+        variance /= popSize;
+        populationVariance = variance;
+        populationMean = mean;
     }
-    variance /= popSize;
-    populationVariance = variance;
-    populationMean = mean;
 }
 
-void GeneticAlgorithm::printInfo()
+void GeneticAlgorithm::printGenerationInfoAndSaveStatistics()
 {
-    std::cout << "Population variance: " << populationVariance
-              << " Population mean: " << populationMean << std::endl;
-    std::cout << "Score of the fittest chromosome is "
-              << selection->getFittestChromosome()->fitnessScore << std::endl;
+    if (generationIndex % 500 == 0)
+    {
+        means.push_back(populationMean);
+        variances.push_back(populationVariance);
+
+        std::cout << "\x1b[2A";
+        std::cout
+            << "Generation " << generationIndex
+            << " Population variance: " << populationVariance
+            << " Population mean: " << populationMean << std::endl
+            << "Score of the fittest chromosome is "
+            << selection->getFittestChromosome()->fitnessScore << std::endl;
+    }
 }
