@@ -1,3 +1,5 @@
+// Copyright (c) 2022 Berk Kirtay
+
 #pragma once
 #include "UniformDistributionGenerator.h"
 #include "Chromosome.h"

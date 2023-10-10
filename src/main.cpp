@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 Berk Kırtay
+﻿// Copyright (c) 2022 Berk Kirtay
 
 #include <vector>
 #include <iostream>

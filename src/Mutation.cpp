@@ -1,3 +1,5 @@
+// Copyright (c) 2022 Berk Kirtay
+
 #include "Mutation.h"
 
 Mutation::Mutation(int chromosomeSize, double mutationPressure)

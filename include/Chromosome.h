@@ -1,3 +1,5 @@
+// Copyright (c) 2022 Berk Kirtay
+
 #pragma once
 #include "FitnessChecker.h"
 #include "UniformDistributionGenerator.h"

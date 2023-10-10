@@ -1,3 +1,5 @@
+// Copyright (c) 2022 Berk Kirtay
+
 #include "GeneticAlgorithm.h"
 
 GeneticAlgorithm::GeneticAlgorithm(int tableSize,
@@ -136,7 +138,7 @@ void GeneticAlgorithm::calculatePopulationDiversity()
 
 void GeneticAlgorithm::printGenerationInfoAndSaveStatistics()
 {
-    if (generationIndex % 500 == 0)
+    if (generationIndex % 100 == 0)
     {
         means.push_back(populationMean);
         variances.push_back(populationVariance);

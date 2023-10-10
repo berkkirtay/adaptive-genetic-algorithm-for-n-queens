@@ -14,19 +14,20 @@ def readData():
 
 
 def chartData(means, variances):
-    times = [i for i in range(len(means))]
+    generations = [i * 100 for i in range(len(means))]
+    colors = ["green", "blue"]
+    line_styles = ["-", "--"]
+    labels = ["Fitness Mean", "Fitness Variance"]
 
-    fig, ax1 = plt.subplots()
+    plt.plot(generations, means,
+             color=colors[0], linestyle=line_styles[0], label=labels[0])
+    # plt.plot(generations, variances,
+    #          color=colors[1], linestyle=line_styles[1], label=labels[1])
 
-    ax2 = ax1.twinx()
-    ax1.plot(times, means, label="Population Mean", color='y')
-   # ax2.plot(times, variances, '-.', label="Variances", color='r')
-
-    ax1.set_xlabel('Time', color='b')
-    ax1.set_ylabel('Population Mean', color='y')
-    #ax2.set_ylabel('Variances', color='r')
-
-    plt.title('Population')
+    plt.legend(loc='upper right')
+    plt.xlabel("Generations")
+    plt.ylabel("Means")
+    plt.title('Population Statics')
     plt.show()
 
 
