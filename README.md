@@ -102,7 +102,10 @@ The script must run with specified arguments. An example may be like:
 **$ ./run.sh -t 20 -p 200 -pp 2 -sp 1 -mp 5**
 
 ## Test Run Example:
+![Enc1](https://raw.githubusercontent.com/berkkirtay/adaptive-genetic-algorithm-for-n-queens/main/doc/Run_Example.png)
 
+## A Population Fitness Graph Example:
+![Enc2](https://raw.githubusercontent.com/berkkirtay/adaptive-genetic-algorithm-for-n-queens/main/doc/Figure_1.png)
 
 ## References:
 [1]	Eiben, A. and Smith, J., 2015. Introduction to Evolutionary Computing. 2nd ed. Berlin: Springer.
